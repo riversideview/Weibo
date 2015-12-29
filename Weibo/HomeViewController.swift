@@ -21,10 +21,12 @@ class HomeViewController: UITableViewController {
         setupStatuses()
     }
     let idButton = IDButton()
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        idButton.setTitle(self.title, forState: .Normal)
-        idButton.addTarget(self, action: "idButtonClick", forControlEvents: .TouchUpInside)
-        self.navigationItem.titleView = idButton
+        dispatch_async(dispatch_get_main_queue()) {
+            
+        }
+        
     }
     
 
@@ -55,7 +57,7 @@ class HomeViewController: UITableViewController {
             params = [
                 
                 "access_token": token,
-                "count": 5
+                "count": 1
                 
             ]
         }
@@ -69,18 +71,19 @@ class HomeViewController: UITableViewController {
         manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 if let statuses = timeline["statuses"] as? [AnyObject] {
-
+                    
                     for statuse in statuses {
+                        print(statuse)
                         let currentstatuse = Statuses.yy_modelWithJSON(statuse)
                         print(currentstatuse.text)
                         print(currentstatuse.created_at)
                         print(currentstatuse.idstr)
                         print(currentstatuse.comments_count)
                         print(currentstatuse.attitudes_count)
+                        print(currentstatuse.reposts_count)
                         print(currentstatuse.user.name)
                         print(currentstatuse.user.idstr)
                         print(currentstatuse.user.profile_image_url)
-                        print(currentstatuse.reposts_count)
                         self.statusesArray.append(currentstatuse)
                         self.tableView.reloadData()
                     }
@@ -97,22 +100,30 @@ class HomeViewController: UITableViewController {
      配置NavBar
      */
     func setupNavBar() {
+        /**
+        创建ID按钮
+        */
+        self.idButton.setTitle(self.title, forState: .Normal)
+        self.idButton.addTarget(self, action: "idButtonClick", forControlEvents: .TouchUpInside)
+        self.navigationItem.titleView = self.idButton
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_friendattention", highlight: "navigationbar_friendattention_highlighted", target: self, selector: "friendattention")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_icon_radar", highlight: "navigationbar_icon_radar_highlighted", target: self, selector: "radar")
         self.navigationController?.navigationBar.barStyle = .Default
         //添加监听标题监听
-        self.addObserver(self, forKeyPath: "title", options: .New, context: nil)
+//        self.navigationItem.addObserver(self, forKeyPath: "title", options: .New, context: nil)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = ITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
-        cell.imageView?.contentMode = .ScaleAspectFill
-        cell.imageView?.autoresizingMask = [.FlexibleBottomMargin, .FlexibleHeight, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleWidth]
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+
         if let statuse = statusesArray[indexPath.row] {
             cell.textLabel?.text = statuse.text
             cell.detailTextLabel?.text = statuse.user.name
-            cell.imageView?.sd_setImageWithURL(NSURL(string: statuse.user.profile_image_url), placeholderImage: UIImage(named: "tabbar_compose_background_icon_add"))
+            cell.imageView?.sd_setImageWithURL(NSURL(string: statuse.user.profile_image_url))
+            
         }
+        
         return cell
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

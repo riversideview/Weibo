@@ -228,8 +228,8 @@
 				8C5CC1131C2C22E900E38044 /* HomeViewController.swift */,
 				8CFFBB131C3189E70022BFDE /* ITableViewCell.swift */,
 				8CF3F0771C2EC53300D239E5 /* IDButton.swift */,
-				8C85F4231C3169FD0083308B /* User.swift */,
 				8C85F4211C31529E0083308B /* Statuses.swift */,
+				8C85F4231C3169FD0083308B /* User.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
