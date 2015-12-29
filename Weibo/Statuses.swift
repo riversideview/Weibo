@@ -30,6 +30,4 @@ class Statuses: NSObject {
     var thumbnail_pic: String?
     /// 转发微博
     var retweeted_status: Statuses?
-    
-    
 }

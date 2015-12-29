@@ -24,6 +24,7 @@
 		8C5EC5F41C2D2C32008C3774 /* CustomBadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5EC5F31C2D2C32008C3774 /* CustomBadgeButton.swift */; };
 		8C85F4221C31529E0083308B /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C85F4211C31529E0083308B /* Statuses.swift */; };
 		8C85F4241C3169FD0083308B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C85F4231C3169FD0083308B /* User.swift */; };
+		8C92BF2B1C3274AF000214E2 /* CellFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C92BF2A1C3274AE000214E2 /* CellFrameController.swift */; };
 		8CB126F21C30D77900902392 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB126F11C30D77900902392 /* Account.swift */; };
 		8CB867721C2E39260028E3AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CB867711C2E39260028E3AF /* Assets.xcassets */; };
 		8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */; };
@@ -69,14 +70,15 @@
 		8C5CC1021C2C194300E38044 /* WeiboUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeiboUITests.swift; sourceTree = "<group>"; };
 		8C5CC1041C2C194300E38044 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C5CC1111C2C226E00E38044 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
-		8C5CC1131C2C22E900E38044 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		8C5CC1151C2C231F00E38044 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
-		8C5CC1171C2C233400E38044 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		8C5CC1131C2C22E900E38044 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HomeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		8C5CC1151C2C231F00E38044 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MessagesViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		8C5CC1171C2C233400E38044 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DiscoverViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8C5CC1191C2C234200E38044 /* MeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		8C5EC5ED1C2CE119008C3774 /* CustomTabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarButton.swift; sourceTree = "<group>"; };
 		8C5EC5F31C2D2C32008C3774 /* CustomBadgeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBadgeButton.swift; sourceTree = "<group>"; };
 		8C85F4211C31529E0083308B /* Statuses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
 		8C85F4231C3169FD0083308B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8C92BF2A1C3274AE000214E2 /* CellFrameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFrameController.swift; sourceTree = "<group>"; };
 		8CB126F11C30D77900902392 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		8CB867711C2E39260028E3AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -85,7 +87,7 @@
 		8CF3F0751C2E9DD400D239E5 /* ISearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISearchBar.swift; sourceTree = "<group>"; };
 		8CF3F0771C2EC53300D239E5 /* IDButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDButton.swift; sourceTree = "<group>"; };
 		8CF3F07A1C2EE4F200D239E5 /* NewFeatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFeatureViewController.swift; sourceTree = "<group>"; };
-		8CFFBB131C3189E70022BFDE /* ITableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITableViewCell.swift; sourceTree = "<group>"; };
+		8CFFBB131C3189E70022BFDE /* ITableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ITableViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A71277AE19163096BF685EAB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,11 +227,9 @@
 		8C5EC5EF1C2CE133008C3774 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8C5CC1131C2C22E900E38044 /* HomeViewController.swift */,
-				8CFFBB131C3189E70022BFDE /* ITableViewCell.swift */,
-				8CF3F0771C2EC53300D239E5 /* IDButton.swift */,
-				8C85F4211C31529E0083308B /* Statuses.swift */,
-				8C85F4231C3169FD0083308B /* User.swift */,
+				8C92BF2E1C3274CE000214E2 /* Controller */,
+				8C92BF2D1C3274C6000214E2 /* View */,
+				8C92BF2C1C3274BA000214E2 /* Model */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -257,6 +257,33 @@
 				8C5CC1191C2C234200E38044 /* MeViewController.swift */,
 			);
 			name = Me;
+			sourceTree = "<group>";
+		};
+		8C92BF2C1C3274BA000214E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8C85F4211C31529E0083308B /* Statuses.swift */,
+				8C85F4231C3169FD0083308B /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8C92BF2D1C3274C6000214E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8CFFBB131C3189E70022BFDE /* ITableViewCell.swift */,
+				8CF3F0771C2EC53300D239E5 /* IDButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		8C92BF2E1C3274CE000214E2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8C5CC1131C2C22E900E38044 /* HomeViewController.swift */,
+				8C92BF2A1C3274AE000214E2 /* CellFrameController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		8CF3F0791C2EE4C700D239E5 /* New Feature */ = {
@@ -462,6 +489,7 @@
 				8C85F4241C3169FD0083308B /* User.swift in Sources */,
 				8CF3F0761C2E9DD400D239E5 /* ISearchBar.swift in Sources */,
 				8C169D6F1C311370003F6B3E /* WeiboTool.swift in Sources */,
+				8C92BF2B1C3274AF000214E2 /* CellFrameController.swift in Sources */,
 				8CFFBB141C3189E70022BFDE /* ITableViewCell.swift in Sources */,
 				8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */,
 				8CF3F06E1C2E58E800D239E5 /* INavigationController.swift in Sources */,

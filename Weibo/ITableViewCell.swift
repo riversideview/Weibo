@@ -1,5 +1,5 @@
 //
-//  ITableViewCell.swift
+//  StatuseCell.swift
 //  Weibo
 //
 //  Created by Riversideview on 15/12/28.
@@ -7,59 +7,112 @@
 //
 
 import UIKit
+///昵称字体
+let IDFont = UIFont.systemFontOfSize(16)
+/// 来源
+let SourceFont = UIFont.systemFontOfSize(16)
+///发送时间
+let TimeFont = UIFont.systemFontOfSize(16)
+/// 正文
+let MainFont = UIFont.systemFontOfSize(20)
 
-class ITableViewCell: UITableViewCell {
+class StatuseCell: UITableViewCell {
     
     ///内容区
-    weak var topView: UIImageView!
+    var topView: UIImageView!
     /// 头像
-    weak var iconView: UIImageView!
+    var iconView: UIImageView!
     /// 昵称
-    weak var idLabel: UILabel!
+    var idLabel: UILabel!
     /// 来源
-    weak var sourceLabel: UILabel!
+    var sourceLabel: UILabel!
     ///发送时间
-    weak var timeLabel: UILabel!
+    var timeLabel: UILabel!
     /// 正文
-    weak var mainLabel: UILabel!
+    var mainLabel: UILabel!
     /// 正文配图
-    weak var thumbnailView: UIImageView!
+    var thumbnailView: UIImageView!
+    ///是否会员
+    var vipView: UIImageView!
     
     ///转发内容区
-    weak var retweetView: UIImageView!
+    var retweetView: UIImageView!
     ///昵称
-    weak var retweetNameButton: UIButton!
+    var retweetNameButton: UIButton!
     ///内容
-    weak var retweetMainLabel: UILabel!
+    var retweetMainLabel: UILabel!
     ///转发配图
-    weak var retweetThumbnailView: UIImageView!
+    var retweetThumbnailView: UIImageView!
 
     
     ///底部功能区
-    weak var toolbar: UIImageView!
+    var toolbar: UIImageView!
     /// 转发
-    weak var repostButton: UIButton!
+    var repostButton: UIButton!
     /// 评论
-    weak var commentsButton: UIButton!
+    var commentsButton: UIButton!
     /// 点赞
-    weak var attitudesButton: UIButton!
+    var attitudesButton: UIButton!
 
 
+    ///自动计算cell的frame并设置frame
+    var controller: CellFrameController! {
+        didSet {
+            setupOriginalSubviewsFrames()
+        }
+    }
+    
+    /**
+     获得微博数据后执行该方法设置子控件的frame
+     */
+    func setupOriginalSubviewsFrames() {
+        let statuse = controller.statuse
+        let user = controller.statuse.user
+
+        ///内容区
+        topView.frame = controller.topView
+        ///头像
+        iconView.sd_setImageWithURL(NSURL(string: statuse.user.profile_image_url), placeholderImage: UIImage(named: "avatar_default"))
+        iconView.frame = controller.iconView
+        /// 昵称
+        idLabel.text = user.name
+        idLabel.font = IDFont
+        idLabel.frame = controller.idLabel
+        /// 来源
+        sourceLabel.text = statuse.source
+        sourceLabel.font = SourceFont
+        sourceLabel.frame = controller.sourceLabel
+        ///发送时间
+        timeLabel.text = statuse.created_at
+        timeLabel.font = TimeFont
+        timeLabel.frame = controller.timeLabel
+        /// 正文
+        mainLabel.text = statuse.text
+        mainLabel.font = MainFont
+        mainLabel.frame = controller.mainLabel
+        mainLabel.numberOfLines = 0
+        
+        
+    }
+    
+
+    
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupOriginalSubviews()
-        setupRetweetSubviews()
-        setupToolbar()
+//        setupRetweetSubviews()
+//        setupToolbar()
     }
+    
     /**
-     配置正文子控件
+     初始化正文子控件
      */
     func setupOriginalSubviews() {
         
         ///将内容区添加到contentView
         topView = UIImageView()
-        self.contentView.addSubview(topView)
+        contentView.addSubview(topView)
 
         /// 头像
         iconView = UIImageView()
@@ -88,7 +141,7 @@ class ITableViewCell: UITableViewCell {
         
         ///将转发添加到内容区
         retweetView = UIImageView()
-        self.topView.addSubview(retweetView)
+        topView.addSubview(retweetView)
         ///昵称
         retweetNameButton = UIButton()
         retweetView.addSubview(retweetNameButton)
@@ -117,20 +170,9 @@ class ITableViewCell: UITableViewCell {
         attitudesButton = UIButton()
         toolbar.addSubview(attitudesButton)
         
-        self.contentView.addSubview(toolbar)
+        contentView.addSubview(toolbar)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
