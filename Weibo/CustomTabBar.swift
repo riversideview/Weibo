@@ -8,7 +8,7 @@
 
 
 @objc protocol CustomTabBarDelegate {
-    optional func didSelectButtonFrom(int: Int, toint: Int)
+    optional func didSelectButtonFrom(toint: Int)
 }
 import UIKit
 
@@ -22,7 +22,7 @@ class CustomTabBar: UIView {
     }
     */
     let plusButton = UIButton()
-    var delegate:CustomTabBarDelegate?
+    var delegate:CustomTabBarDelegate!
 
     override init(frame: CGRect) {
 
@@ -59,7 +59,7 @@ class CustomTabBar: UIView {
     
     func buttonClick(button: UIButton) {
         
-        delegate?.didSelectButtonFrom!(ssdgadgButton.tag, toint: button.tag)
+        delegate.didSelectButtonFrom!(button.tag)
         ssdgadgButton.selected = false
         button.selected = true
         ssdgadgButton = button

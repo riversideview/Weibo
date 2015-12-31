@@ -35,9 +35,7 @@ class Status: NSObject {
 
         
         if let time = creatDate {
-            print("created_at = \(created_at)")
-            print("time = \(time)")
-
+            
             if time.isToday() {
                 
                 if time.deltaWithNow().hour >= 1 {///一小时前

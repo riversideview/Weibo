@@ -71,7 +71,8 @@ class MainTabBarViewController: UITabBarController {
     
 }
 extension MainTabBarViewController: CustomTabBarDelegate {
-    func didSelectButtonFrom(int: Int, toint: Int) {
+    
+    func didSelectButtonFrom(toint: Int) {
         self.selectedIndex = toint
     }
 }

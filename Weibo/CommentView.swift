@@ -90,25 +90,25 @@ class CommentView: UIImageView {
     }
     
     override func layoutSubviews() {
-        var f: CGFloat = 0
+        var increment: CGFloat = 0
         for button in buttons {
             
-            let buttonX: CGFloat = self.frame.width / 3 * f
+            let buttonX: CGFloat = self.frame.width / 3 * increment
             let buttonY: CGFloat = 0
             let buttonW: CGFloat = self.frame.width / 3
             let buttonH: CGFloat = self.frame.height
             button.frame = CGRect(x: buttonX, y: buttonY, width: buttonW, height: buttonH)
-            f++
+            increment++
         }
-        f = 1
+        increment = 1
         for separator in separators {
 //             |    |    |    |
 
-            let separatorX: CGFloat = self.frame.width / 3 * f
+            let separatorX: CGFloat = self.frame.width / 3 * increment
             let separatorY: CGFloat = 0
 
             separator.frame.origin = CGPoint(x: separatorX, y: separatorY)
-            f++
+            increment++
         }
     }
     
