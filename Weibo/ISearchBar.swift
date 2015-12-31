@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ISearchBar: UITextField {
+class ISearchBar: UITextField, UITextFieldDelegate {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -29,6 +29,10 @@ class ISearchBar: UITextField {
         self.clearButtonMode = .WhileEditing
         self.returnKeyType = .Search
         self.enablesReturnKeyAutomatically = true
+        self.delegate = self
+    }
+    deinit {
+        print("deinit")
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +43,13 @@ class ISearchBar: UITextField {
         self.leftView?.contentMode = .Center
         self.leftView?.frame.size = CGSize(width: 30, height: 30)
     }
-   
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.endEditing(true)
+        print("xxxx")
+        return true
+    }
+    
     
     
 

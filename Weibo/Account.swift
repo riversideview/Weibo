@@ -24,7 +24,7 @@ class Account: NSObject, NSCoding {
     var expires_in: Int32 = 0
     var remind_in: Int32 = 0
     var uid: Int32 = 0
-    var expiresTime: NSDate = NSDate()
+    var expiresTime: NSDate!
     
     init(account: [String : AnyObject]) {
         super.init()

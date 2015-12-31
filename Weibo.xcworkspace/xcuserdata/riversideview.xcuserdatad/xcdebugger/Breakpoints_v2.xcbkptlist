@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Weibo/ITableViewCell.swift"
-            timestampString = "473085169.401347"
+            timestampString = "473145017.23424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "setupOriginalSubviews()"
             landmarkType = "5">
          </BreakpointContent>

@@ -55,15 +55,14 @@ class CustomTabBar: UIView {
     }
     
     
-    lazy var selectButton = UIButton()
+    var ssdgadgButton = UIButton()
     
     func buttonClick(button: UIButton) {
         
-        delegate?.didSelectButtonFrom!(selectButton.tag, toint: button.tag)
-
-        selectButton.selected = false
+        delegate?.didSelectButtonFrom!(ssdgadgButton.tag, toint: button.tag)
+        ssdgadgButton.selected = false
         button.selected = true
-        selectButton = button
+        ssdgadgButton = button
     }
     override func layoutSubviews() {
         super.layoutSubviews()

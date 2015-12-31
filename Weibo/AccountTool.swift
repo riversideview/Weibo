@@ -26,8 +26,11 @@ class AccountTool: NSObject {
             let expiresTime = account.expiresTime
             if NSDate().compare(expiresTime) == .OrderedAscending {
                 print("expiresTime > now")
-                print(NSDate())
-                print(expiresTime)
+                print("现在\(NSDate())")
+                print("过期时间 \(expiresTime)")
+                print("")
+                print("")
+                print("")
                 return account
             }
         }

@@ -24,7 +24,10 @@ class HomeViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupNavBar()
-        setupStatuses()
+        setupStatus()
+        self.tableView.backgroundColor = UIColor(red: 200, green: 200, blue: 200, alpha: 1)
+        self.tableView.separatorStyle = .None
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     }
     
     func idButtonClick() {
@@ -43,7 +46,7 @@ class HomeViewController: UITableViewController {
     }
 
     //获取最新微博
-    func setupStatuses() {
+    func setupStatus() {
         let manager = AFHTTPSessionManager()
         var params = [String: AnyObject] ()
         let url = "https://api.weibo.com/2/statuses/home_timeline.json"
@@ -52,7 +55,7 @@ class HomeViewController: UITableViewController {
                 
                 "access_token": token,
                 
-                "count": 15 //获取数量
+                "count": 20 //微博获取数量
                 
             ]
         }
@@ -62,11 +65,14 @@ class HomeViewController: UITableViewController {
         manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
-                    for statuse in statuses {
-                        let currentStatuse = Statuses.yy_modelWithJSON(statuse)
-                        let frames = CellFrameController()
-                        frames.statuse = currentStatuse
-                        self.controllerArray.append(frames)
+
+                    for status in statuses {
+                        
+                        let currentStatus = Status.yy_modelWithJSON(status)
+
+                        let controller = CellFrameController()
+                        controller.status = currentStatus
+                        self.controllerArray.append(controller)
                         
                     }
                     self.tableView.reloadData()
@@ -100,16 +106,9 @@ class HomeViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = StatuseCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+        
+        let cell = StatusCell(style: .Default, reuseIdentifier: "Cell")
         cell.controller = self.controllerArray[indexPath.row]
-//        if let statuse = controllerArray[indexPath.row]?.statuse {
-//            cell.mainLabel.text = statuse.text
-//            cell.idLabel.text = statuse.user.name
-//            cell.iconView.sd_setImageWithURL(NSURL(string: statuse.user.profile_image_url))
-//            cell.sourceLabel.text = statuse.source
-//            cell.timeLabel.text = statuse.created_at
-//            return cell
-//        }
         
         return cell
     }
@@ -119,6 +118,7 @@ class HomeViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return controllerArray[indexPath.row].cellHeight
     }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return controllerArray.count
     }

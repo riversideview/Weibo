@@ -10,7 +10,7 @@ import UIKit
 class CellFrameController: NSObject {
     
     ///内容区
-    var topView: CGRect!
+    var statusView: CGRect!
     /// 头像
     var iconView: CGRect!
     /// 昵称
@@ -28,98 +28,158 @@ class CellFrameController: NSObject {
     
     ///转发内容区
     var retweetView: CGRect!
-    ///昵称
-    var retweetNameButton: CGRect!
-    ///内容
+    ///昵称+内容
     var retweetMainLabel: CGRect!
     ///转发配图
     var retweetThumbnailView: CGRect!
     
     
-    ///底部功能区
-    var toolbar: CGRect!
-    /// 转发
-    var repostButton: CGRect!
-    /// 评论
-    var commentsButton: CGRect!
-    /// 点赞
-    var attitudesButton: CGRect!
+    ///底部评论区
+    var commentView: CGRect!
+    
     /// cell高度
     var cellHeight: CGFloat!
-    ///statuse属性
-    var statuse: Statuses! {
+    
+    
+    
+    ///获取到的微博属性
+    var status: Status! {
         didSet {
-            setupTopViewFrames()
-            print("cellHeight = \(cellHeight)")
+            setupStatusViewFrames()
         }
     }
     /**
      自动计算Cell的高度以及子控件frame
      */
-    func setupTopViewFrames() {
+    func setupStatusViewFrames() {
         
         ///cell宽度
         let cellWidth: CGFloat = UIScreen.mainScreen().bounds.width
-        ///cell外边缘
-        let cellEdge: CGFloat = 5
+        ///statusView
+        let topX: CGFloat = 0
+        let topY: CGFloat = 0
+        let topW: CGFloat = cellWidth
+        var topH: CGFloat = 0
        
         /// 头像
-        let iconX: CGFloat = cellEdge
-        let iconY: CGFloat = cellEdge
-        let iconW: CGFloat = cellWidth / 12
-        let iconH: CGFloat = cellWidth / 12
+        let iconX: CGFloat = cellSpacing
+        let iconY: CGFloat = cellSpacing
+        let iconW: CGFloat = cellWidth / 9
+        let iconH: CGFloat = cellWidth / 9
         
         iconView = CGRect(x: iconX, y: iconY, width: iconW, height: iconH)
-        
+
         /// 昵称
-        let idX: CGFloat = iconX + iconW + cellEdge
-        let idY: CGFloat = cellEdge
-        let idSize: CGSize = (statuse.user.name as NSString).sizeWithAttributes([NSFontAttributeName: IDFont as AnyObject])
+        let idSize: CGSize = (status.user.name as NSString).sizeWithAttributes([NSFontAttributeName: IDFont as AnyObject])
+        let idX: CGFloat = CGRectGetMaxX(iconView) + cellSpacing
+        let idY: CGFloat = CGRectGetMaxY(iconView) - iconH/2 - idSize.height
         
         idLabel = CGRect(x: idX, y: idY, width: idSize.width, height: idSize.height)
         
-        ///是否会员
-        let vipX: CGFloat = idX + idSize.width + 2 //左右边距
-        let vipY: CGFloat = cellEdge
-        let vipW: CGFloat = 12
-        let vipH: CGFloat = 12
-        
-        vipView = CGRect(x: vipX, y: vipY, width: vipW, height: vipH)
-        
+//        ///是否会员
+//        let vipX: CGFloat = idX + idSize.width + 2 //左右边距
+//        let vipY: CGFloat = cellSpacing
+//        let vipW: CGFloat = 12
+//        let vipH: CGFloat = 12
+//        
+//        vipView = CGRect(x: vipX, y: vipY, width: vipW, height: vipH)
+       
         ///发送时间
         let timeX: CGFloat = idX
-        let timeY: CGFloat = idY + idSize.height + 2 //上下边距
-        let timeSize: CGSize = (statuse.created_at as NSString).sizeWithAttributes([NSFontAttributeName: TimeFont as AnyObject])
+        let timeY: CGFloat = iconH/2 + cellSpacing + 2
+        let timeSize: CGSize = (status.created_atLabelString as NSString).sizeWithAttributes([NSFontAttributeName: TimeFont as AnyObject])
         timeLabel = CGRect(x: timeX, y: timeY, width: timeSize.width, height: timeSize.height)
         
         /// 来源
-        let sourceX: CGFloat = timeX + timeSize.width + 2
+        let sourceX: CGFloat = timeX + timeSize.width + cellSpacing
         let sourceY: CGFloat = timeY
-        let sourceSize: CGSize = (statuse.source as NSString).sizeWithAttributes([NSFontAttributeName: SourceFont as AnyObject])
+        let sourceSize: CGSize = (status.source as NSString).sizeWithAttributes([NSFontAttributeName: SourceFont as AnyObject])
 
         sourceLabel = CGRect(x: sourceX, y: sourceY, width: sourceSize.width, height: sourceSize.height)
         
         /// 正文
         let mainX: CGFloat = iconX
-        let mainY: CGFloat = cellEdge + iconH + 10
-        let mainText = NSAttributedString(string: statuse.text, attributes: [NSFontAttributeName: MainFont as AnyObject])
-        let mainSize = mainText.boundingRectWithSize(CGSize(width: cellWidth - cellEdge * 2, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil)
-        print(mainSize)
+        let mainY: CGFloat = CGRectGetMaxY(iconView) + cellSpacing
+        let mainText = NSAttributedString(string: status.text, attributes: [NSFontAttributeName: MainFont as AnyObject])
+        let mainSize = mainText.boundingRectWithSize(CGSize(width: cellWidth - cellSpacing * 2, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil)
         
         mainLabel = CGRect(x: mainX, y: mainY, width: mainSize.width, height: mainSize.height)
+
+        /// 正文配图
+        if status.thumbnail_pic != nil {
+            let thumbnailX: CGFloat = mainX
+            let thumbnailY: CGFloat = CGRectGetMaxY(mainLabel) + cellSpacing
+            let thumbnailW: CGFloat = cellWidth / 3
+            let thumbnailH: CGFloat = cellWidth / 2
+
+            thumbnailView = CGRect(x: thumbnailX, y: thumbnailY, width: thumbnailW, height: thumbnailH)
+            topH += thumbnailH + cellSpacing
+        } else if status.retweeted_status == nil && status.thumbnail_pic == nil{
+            topH = CGRectGetMaxY(mainLabel) + cellSpacing
+        }
         
-//        /// 正文配图
-//        thumbnailView =
+        ///转发
+        if let retweeted_status = status.retweeted_status {
+            ///昵称+内容
+            let retweetMainX: CGFloat = cellSpacing
+            let retweetMainY: CGFloat = cellSpacing
             
-        ///内容区
-        let topX: CGFloat = 0
-        let topY: CGFloat = 0
-        let topW: CGFloat = cellWidth
-        let topH: CGFloat = cellEdge + CGRectGetMaxY(mainLabel)
+            let contentWidth = cellWidth - cellSpacing * 2
+            let retweetMainText = "@" + retweeted_status.user.name + "：" + retweeted_status.text
+            let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
+            let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: [.UsesLineFragmentOrigin, .TruncatesLastVisibleLine, .UsesDeviceMetrics, .UsesFontLeading], context: nil).size
+
+            retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
+            
+            ///转发配图
+            if retweeted_status.thumbnail_pic != nil {
+                let retweetThumbnailX: CGFloat = retweetMainX
+                let retweetThumbnailY: CGFloat = CGRectGetMaxY(retweetMainLabel) + cellSpacing
+                let retweetThumbnailW: CGFloat = cellWidth / 3
+                let retweetThumbnailH: CGFloat = cellWidth / 2
+
+                retweetThumbnailView = CGRect(x: retweetThumbnailX, y: retweetThumbnailY, width: retweetThumbnailW, height: retweetThumbnailH)
+                
+                ///转发内容区(有图)
+                let retweetX: CGFloat = 0
+                let retweetY: CGFloat = CGRectGetMaxY(mainLabel) + cellSpacing
+                let retweetW: CGFloat = cellWidth
+                let retweetH: CGFloat = cellSpacing + CGRectGetMaxY(retweetThumbnailView)
+                
+                retweetView = CGRect(x: retweetX, y: retweetY, width: retweetW, height: retweetH)
+                
+            } else {
+                ///转发内容区(无图)
+                let retweetX: CGFloat = 0
+                let retweetY: CGFloat = CGRectGetMaxY(mainLabel) + cellSpacing
+                let retweetW: CGFloat = cellWidth
+                let retweetH: CGFloat = CGRectGetMaxY(retweetMainLabel) + cellSpacing
+                
+                retweetView = CGRect(x: retweetX, y: retweetY, width: retweetW, height: retweetH)
+            }
+            
+            ///内容区(有转发)
+            
+            topH += CGRectGetMaxY(mainLabel) + retweetView.height + cellSpacing
+            
+            statusView = CGRect(x: topX, y: topY, width: topW, height: topH)
+        } else {
+            ///内容区(无转发)
+            
+            topH += CGRectGetMaxY(mainLabel)  + cellSpacing
+            
+            statusView = CGRect(x: topX, y: topY, width: topW, height: topH)
+            
+        }
+        ///底部评论区
+        let toolX: CGFloat = 0
+        let toolY: CGFloat = topH 
+        let toolW: CGFloat = cellWidth
+        let toolH: CGFloat = 35
         
-        topView = CGRect(x: topX, y: topY, width: topW, height: topH)
+        commentView = CGRect(x: toolX, y: toolY, width: toolW, height: toolH)
+        cellHeight = CGRectGetMaxY(commentView) + 5
         
-        cellHeight = topView.height
     }
     
 
