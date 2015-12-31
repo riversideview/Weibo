@@ -55,8 +55,9 @@ class HomeViewController: UITableViewController {
                 
                 "access_token": token,
                 
-                "count": 5 //微博获取数量
+                "count": 20 //微博获取数量
                 
+        
             ]
         }
         /**
@@ -65,20 +66,23 @@ class HomeViewController: UITableViewController {
         manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
-                    
+                    var i = 0
                     for status in statuses {
-                        print(status["pic_urls"])
 
-                        let currentStatus = Status.yy_modelWithJSON(status)
+                        let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
 
                         let controller = CellFrameController()
                         controller.status = currentStatus
+                        print(i)
+                        print(controller.status.pic_urls)
                         self.controllerArray.append(controller)
+                        i++
                         
                     }
                     self.tableView.reloadData()
                     
                 }
+          
                 
             }
             }) { (_, error: NSError) -> Void in
@@ -87,6 +91,8 @@ class HomeViewController: UITableViewController {
         }
         
     }
+    
+    
     
     /**
      配置NavBar

@@ -106,7 +106,7 @@ class CellFrameController: NSObject {
         mainLabel = CGRect(x: mainX, y: mainY, width: mainSize.width, height: mainSize.height)
 
         /// 正文配图
-        if status.thumbnail_pic != nil {
+        if status.pic_urls?.count > 0 {
             let thumbnailX: CGFloat = mainX
             let thumbnailY: CGFloat = CGRectGetMaxY(mainLabel) + cellSpacing
             let thumbnailW: CGFloat = cellWidth / 3
@@ -114,7 +114,7 @@ class CellFrameController: NSObject {
 
             thumbnailView = CGRect(x: thumbnailX, y: thumbnailY, width: thumbnailW, height: thumbnailH)
             topH += thumbnailH + cellSpacing
-        } else if status.retweeted_status == nil && status.thumbnail_pic == nil{
+        } else if status.retweeted_status == nil && status.pic_urls?.count == 0 {
             topH = CGRectGetMaxY(mainLabel) + cellSpacing
         }
         
@@ -132,7 +132,7 @@ class CellFrameController: NSObject {
             retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
             
             ///转发配图
-            if retweeted_status.thumbnail_pic != nil {
+            if retweeted_status.pic_urls?.count > 0 {
                 let retweetThumbnailX: CGFloat = retweetMainX
                 let retweetThumbnailY: CGFloat = CGRectGetMaxY(retweetMainLabel) + cellSpacing
                 let retweetThumbnailW: CGFloat = cellWidth / 3

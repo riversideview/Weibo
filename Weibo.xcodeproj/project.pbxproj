@@ -36,6 +36,7 @@
 		8CF3F0761C2E9DD400D239E5 /* ISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F0751C2E9DD400D239E5 /* ISearchBar.swift */; };
 		8CF3F0781C2EC53300D239E5 /* IDButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F0771C2EC53300D239E5 /* IDButton.swift */; };
 		8CF3F07B1C2EE4F200D239E5 /* NewFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F07A1C2EE4F200D239E5 /* NewFeatureViewController.swift */; };
+		8CFB09F31C358CAB00292B3C /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFB09F21C358CAB00292B3C /* Photos.swift */; };
 		8CFFBB141C3189E70022BFDE /* StatuseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFFBB131C3189E70022BFDE /* StatuseCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		8CF3F0751C2E9DD400D239E5 /* ISearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISearchBar.swift; sourceTree = "<group>"; };
 		8CF3F0771C2EC53300D239E5 /* IDButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDButton.swift; sourceTree = "<group>"; };
 		8CF3F07A1C2EE4F200D239E5 /* NewFeatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFeatureViewController.swift; sourceTree = "<group>"; };
+		8CFB09F21C358CAB00292B3C /* Photos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		8CFFBB131C3189E70022BFDE /* StatuseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = StatuseCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A71277AE19163096BF685EAB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -268,6 +270,7 @@
 		8C92BF2C1C3274BA000214E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8CFB09F21C358CAB00292B3C /* Photos.swift */,
 				8C92BF2A1C3274AE000214E2 /* CellFrameController.swift */,
 				8C85F4211C31529E0083308B /* Status.swift */,
 				8C85F4231C3169FD0083308B /* User.swift */,
@@ -507,6 +510,7 @@
 				8CF3F06E1C2E58E800D239E5 /* INavigationController.swift in Sources */,
 				8C169D6D1C310EE4003F6B3E /* AccountTool.swift in Sources */,
 				8CB126F21C30D77900902392 /* Account.swift in Sources */,
+				8CFB09F31C358CAB00292B3C /* Photos.swift in Sources */,
 				8C5CC1181C2C233400E38044 /* DiscoverViewController.swift in Sources */,
 				8C5CC0E31C2C194300E38044 /* AppDelegate.swift in Sources */,
 				8C5CC1141C2C22E900E38044 /* HomeViewController.swift in Sources */,

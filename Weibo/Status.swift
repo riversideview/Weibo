@@ -8,8 +8,9 @@
 
 
 import UIKit
+import YYModel
 ///微博模型
-class Status: NSObject {
+class Status: NSObject, YYModel {
     /// 转发数
     var reposts_count: String!
     /// 评论数
@@ -85,13 +86,23 @@ class Status: NSObject {
     }
     /// 用户详细数据
     var user: User!
-    /// 正文配图
-    var thumbnail_pic: String?
+//    /// 正文配图
+//    var thumbnail_pic: String?
+    ///全部配图
+    var pic_urls: NSArray?
+
     /// 转发微博
     var retweeted_status: Status?
+    
+    
+    
+    static func modelContainerPropertyGenericClass() -> [NSObject : AnyObject]! {
+        return ["pic_urls": Photos.self]
+    }
 }
-    
-    
+
+
+
 extension NSDate {
     func isToday() -> Bool {
         ///创建日历

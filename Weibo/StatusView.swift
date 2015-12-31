@@ -136,9 +136,11 @@ class StatusView: UIImageView {
         mainLabel.text = status.text
         mainLabel.frame = controller.mainLabel
         
-        if status.thumbnail_pic != nil {
+
+        if status.pic_urls?.count > 0 {
+            let photo = status.pic_urls![0] as! Photos
             thumbnailView.frame = controller.thumbnailView
-            thumbnailView.sd_setImageWithURL(NSURL(string: status.thumbnail_pic!), placeholderImage: UIImage(named: "timeline_image_placeholder"))
+            thumbnailView.sd_setImageWithURL(NSURL(string: photo.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
         }
         
         ///传入frame
