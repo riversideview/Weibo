@@ -109,11 +109,31 @@ class CellFrameController: NSObject {
         if status.pic_urls?.count > 0 {
             let thumbnailX: CGFloat = mainX
             let thumbnailY: CGFloat = CGRectGetMaxY(mainLabel) + cellSpacing
-            let thumbnailW: CGFloat = cellWidth / 3
-            let thumbnailH: CGFloat = cellWidth / 2
+            let imageCount = status.pic_urls?.count
+            
+            let thumbnailW: CGFloat = cellWidth - cellSpacing * 2
+            var thumbnailH: CGFloat = cellWidth / 2
+
+            if imageCount == 1 {
+                thumbnailH = thumbnailW / 3
+            } else if imageCount == 2 {
+                thumbnailH = (thumbnailW - imageSpacing * 2) / 2.5
+            } else if imageCount == 3 {
+                thumbnailH = (thumbnailW - imageSpacing * 2) / 3
+            } else if imageCount == 4 {
+                thumbnailH = ((thumbnailW - imageSpacing * 2) / 2.8) * 2 + imageSpacing
+            } else if imageCount > 4 {
+                if imageCount > 6 { //共三行
+                    thumbnailH = (thumbnailW - imageSpacing * 2) / 3 * 3 + imageSpacing * 2
+                } else { //共两行
+                    thumbnailH = (thumbnailW - imageSpacing * 2) / 3 * 2 + imageSpacing
+                }
+            }
 
             thumbnailView = CGRect(x: thumbnailX, y: thumbnailY, width: thumbnailW, height: thumbnailH)
-            topH += thumbnailH + cellSpacing
+            
+            
+            topH += CGRectGetMaxY(thumbnailView)  + cellSpacing
         } else if status.retweeted_status == nil && status.pic_urls?.count == 0 {
             topH = CGRectGetMaxY(mainLabel) + cellSpacing
         }
@@ -125,20 +145,55 @@ class CellFrameController: NSObject {
             let retweetMainY: CGFloat = cellSpacing
             
             let contentWidth = cellWidth - cellSpacing * 2
-            let retweetMainText = "@" + retweeted_status.user.name + "：" + retweeted_status.text
-            let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
-            let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: [.UsesLineFragmentOrigin, .TruncatesLastVisibleLine, .UsesDeviceMetrics, .UsesFontLeading], context: nil).size
+            ///判断转发微博是否被删除
+            if retweeted_status.user != nil {
+                let retweetMainText = "@" + retweeted_status.user.name + "：" + retweeted_status.text
+                let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
+                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
 
-            retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
+                retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
+            } else {
+                let retweetMainText = retweeted_status.text
+                let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
+                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
+                
+                retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
+            }
             
             ///转发配图
             if retweeted_status.pic_urls?.count > 0 {
+                
+                let imageCount = retweeted_status.pic_urls?.count
+
+                
                 let retweetThumbnailX: CGFloat = retweetMainX
                 let retweetThumbnailY: CGFloat = CGRectGetMaxY(retweetMainLabel) + cellSpacing
-                let retweetThumbnailW: CGFloat = cellWidth / 3
-                let retweetThumbnailH: CGFloat = cellWidth / 2
+                let retweetThumbnailW: CGFloat = cellWidth - cellSpacing * 2
+                var retweetThumbnailH: CGFloat = cellWidth / 2
+                
+                if imageCount == 1 {
+                    retweetThumbnailH = retweetThumbnailW / 2
+                } else if imageCount == 2 {
+                    retweetThumbnailH = (retweetThumbnailW - imageSpacing * 2) / 2.5
+                } else if imageCount == 3 {
+                    retweetThumbnailH = (retweetThumbnailW - imageSpacing * 2) / 3
+                } else if imageCount == 4 {
+                    retweetThumbnailH = ((retweetThumbnailW - imageSpacing * 2) / 2.8) * 2 + imageSpacing
 
+                } else if imageCount > 4 {
+                    if imageCount > 6 { //共三行
+                        retweetThumbnailH = (retweetThumbnailW - imageSpacing * 2) / 3 * 3 + imageSpacing * 2
+                    } else { //共两行
+                        retweetThumbnailH = (retweetThumbnailW - imageSpacing * 2) / 3 * 2 + imageSpacing
+                    }
+                }
+
+                
                 retweetThumbnailView = CGRect(x: retweetThumbnailX, y: retweetThumbnailY, width: retweetThumbnailW, height: retweetThumbnailH)
+                
+                
+                
+                
                 
                 ///转发内容区(有图)
                 let retweetX: CGFloat = 0
@@ -166,14 +221,13 @@ class CellFrameController: NSObject {
         } else {
             ///内容区(无转发)
             
-            topH += CGRectGetMaxY(mainLabel)  + cellSpacing
             
             statusView = CGRect(x: topX, y: topY, width: topW, height: topH)
             
         }
         ///底部评论区
         let toolX: CGFloat = 0
-        let toolY: CGFloat = topH 
+        let toolY: CGFloat = topH
         let toolW: CGFloat = cellWidth
         let toolH: CGFloat = 35
         

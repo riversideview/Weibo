@@ -23,7 +23,7 @@ class RetweetView: UIImageView {
     ///昵称+内容
     var retweetMainLabel: UILabel!
     ///转发配图
-    var retweetThumbnailView: UIImageView!
+    var retweetThumbnailView: ThumbnailView!
 
     convenience init() {
         self.init(frame: CGRectZero)
@@ -56,7 +56,7 @@ class RetweetView: UIImageView {
         self.addSubview(retweetMainLabel)
         
         ///转发配图
-        retweetThumbnailView = UIImageView()
+        retweetThumbnailView = ThumbnailView()
         self.addSubview(retweetThumbnailView)
         
     }
@@ -68,14 +68,19 @@ class RetweetView: UIImageView {
         if let retweet = controller.status.retweeted_status {
             ///昵称+内容
             retweetMainLabel.frame = controller.retweetMainLabel
-            let retweetMainText = "@" + retweet.user.name + "：" + retweet.text
-            retweetMainLabel.text = retweetMainText
+            if retweet.user != nil {
+                let retweetMainText = "@" + retweet.user.name + "：" + retweet.text
+                retweetMainLabel.text = retweetMainText
+            } else {
+                retweetMainLabel.text = retweet.text
+            }
             
             if retweet.pic_urls?.count > 0 {
-                let photo = retweet.pic_urls![0] as! Photos
+
                 ///转发配图
                 retweetThumbnailView.frame = controller.retweetThumbnailView
-                retweetThumbnailView.sd_setImageWithURL(NSURL(string: photo.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
+                retweetThumbnailView.controller = controller
+//                retweetThumbnailView.sd_setImageWithURL(NSURL(string: photo!.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
             } else {
                 retweetThumbnailView.removeFromSuperview()
             }

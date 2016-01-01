@@ -65,18 +65,16 @@ class HomeViewController: UITableViewController {
         */
         manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
+                print(timeline)
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
-                    var i = 0
                     for status in statuses {
 
                         let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
 
                         let controller = CellFrameController()
                         controller.status = currentStatus
-                        print(i)
-                        print(controller.status.pic_urls)
+                        print(controller.status.pic_urls?.count)
                         self.controllerArray.append(controller)
-                        i++
                         
                     }
                     self.tableView.reloadData()

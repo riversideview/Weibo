@@ -9,6 +9,7 @@
 
 import UIKit
 import YYModel
+
 ///微博模型
 class Status: NSObject, YYModel {
     /// 转发数
@@ -97,7 +98,7 @@ class Status: NSObject, YYModel {
     
     
     static func modelContainerPropertyGenericClass() -> [NSObject : AnyObject]! {
-        return ["pic_urls": Photos.self]
+        return ["pic_urls": Photo.self]
     }
 }
 

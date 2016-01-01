@@ -9,6 +9,8 @@
 import UIKit
 ///cell内间距
 let cellSpacing: CGFloat = 10
+///图片间距
+let imageSpacing:CGFloat = 5
 
 ///昵称字体
 let IDFont = UIFont.systemFontOfSize(16)

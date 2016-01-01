@@ -26,7 +26,7 @@ class StatusView: UIImageView {
     /// 正文
     var mainLabel: UILabel!
     /// 正文配图
-    var thumbnailView: UIImageView!
+    var thumbnailView: ThumbnailView!
     ///是否会员
     var vipView: UIImageView!
     
@@ -83,7 +83,7 @@ class StatusView: UIImageView {
         mainLabel.backgroundColor = UIColor.clearColor()
         self.addSubview(mainLabel)
         /// 正文配图
-        thumbnailView = UIImageView()
+        thumbnailView = ThumbnailView()
         self.addSubview(thumbnailView)
         
         ///将转发区域添加到内容区
@@ -138,9 +138,10 @@ class StatusView: UIImageView {
         
 
         if status.pic_urls?.count > 0 {
-            let photo = status.pic_urls![0] as! Photos
+//            let photo = status.pic_urls?.firstObject as! Photo
             thumbnailView.frame = controller.thumbnailView
-            thumbnailView.sd_setImageWithURL(NSURL(string: photo.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
+            thumbnailView.controller = controller
+//            thumbnailView.sd_setImageWithURL(NSURL(string: photo.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
         }
         
         ///传入frame
