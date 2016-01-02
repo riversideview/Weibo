@@ -10,6 +10,7 @@
 		06672029CC14E7FDFF69D054 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73AE32EDA32ED2035C59AB0A /* Pods.framework */; };
 		8C169D6D1C310EE4003F6B3E /* AccountTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C169D6C1C310EE4003F6B3E /* AccountTool.swift */; };
 		8C169D6F1C311370003F6B3E /* WeiboTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C169D6E1C311370003F6B3E /* WeiboTool.swift */; };
+		8C470D101C37DC6A003622BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C470D0F1C37DC6A003622BA /* Assets.xcassets */; };
 		8C4EBBE41C2FE5990094B9D4 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4EBBE31C2FE5990094B9D4 /* OAuthViewController.swift */; };
 		8C5AB80D1C35230B003677F2 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5AB80C1C35230B003677F2 /* CommentView.swift */; };
 		8C5CC0E31C2C194300E38044 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5CC0E21C2C194300E38044 /* AppDelegate.swift */; };
@@ -30,7 +31,6 @@
 		8C92BF2B1C3274AF000214E2 /* StatusCellSubviewFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C92BF2A1C3274AE000214E2 /* StatusCellSubviewFrame.swift */; };
 		8C9876581C3625F300B69EC0 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9876571C3625F300B69EC0 /* ThumbnailView.swift */; };
 		8CB126F21C30D77900902392 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB126F11C30D77900902392 /* Account.swift */; };
-		8CB867721C2E39260028E3AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CB867711C2E39260028E3AF /* Assets.xcassets */; };
 		8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */; };
 		8CF3F06E1C2E58E800D239E5 /* INavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */; };
 		8CF3F0721C2E853500D239E5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F0711C2E853500D239E5 /* Extension.swift */; };
@@ -63,6 +63,7 @@
 		73AE32EDA32ED2035C59AB0A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C169D6C1C310EE4003F6B3E /* AccountTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTool.swift; sourceTree = "<group>"; };
 		8C169D6E1C311370003F6B3E /* WeiboTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeiboTool.swift; sourceTree = "<group>"; };
+		8C470D0F1C37DC6A003622BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C4EBBE31C2FE5990094B9D4 /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
 		8C5AB80C1C35230B003677F2 /* CommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		8C5CC0DF1C2C194300E38044 /* Weibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,7 +90,6 @@
 		8C92BF2A1C3274AE000214E2 /* StatusCellSubviewFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCellSubviewFrame.swift; sourceTree = "<group>"; };
 		8C9876571C3625F300B69EC0 /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		8CB126F11C30D77900902392 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		8CB867711C2E39260028E3AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INavigationController.swift; sourceTree = "<group>"; };
 		8CF3F0711C2E853500D239E5 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 		8C5CC1101C2C1B4600E38044 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8CB867711C2E39260028E3AF /* Assets.xcassets */,
+				8C470D0F1C37DC6A003622BA /* Assets.xcassets */,
 				8C5CC0EB1C2C194300E38044 /* LaunchScreen.storyboard */,
 				8C5CC0EE1C2C194300E38044 /* Info.plist */,
 			);
@@ -419,7 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CB867721C2E39260028E3AF /* Assets.xcassets in Resources */,
+				8C470D101C37DC6A003622BA /* Assets.xcassets in Resources */,
 				8C5CC0ED1C2C194300E38044 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

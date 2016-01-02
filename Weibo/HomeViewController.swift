@@ -145,8 +145,6 @@ class HomeViewController: UITableViewController {
                     self.tableView.mj_footer.endRefreshing()
                     print("完成刷新")
                     self.tableView.reloadData()
-
-                    
                 }
                 
                 
@@ -236,8 +234,7 @@ class HomeViewController: UITableViewController {
     
     ///初始化顶部IDButton内容
     func setupIDButton() {
-        let manager = AFHTTPSessionManager()
-        var params = NSMutableDictionary()
+        var params = [String: AnyObject]()
         
         let url = "https://api.weibo.com/2/users/show.json"
         if let account = AccountTool.localAccount {
@@ -245,25 +242,31 @@ class HomeViewController: UITableViewController {
                 "access_token": account.access_token,
                 "uid": Int(AccountTool.localAccount!.uid)
             ]
-            if account.name != nil {
+            if account.name != "" {
                 self.idButton.setTitle(account.name, forState: .Normal)
+                saveLoginUserName(url, params: params)
             } else {
-                manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
-                    if let user = data as? [String : AnyObject] {
-                        //                print(user)
-                        let loginUser = User.yy_modelWithDictionary(user as [NSObject : AnyObject])
-                        self.idButton.setTitle(loginUser.name, forState: .Normal)
-                        let account = AccountTool.localAccount!
-                        account.name = loginUser.name
-                        AccountTool.saveAccount(account)
-                    }
-                    }) { (data, error: NSError) -> Void in
-                        print("failed \(error) \(data)")
-                }
+                saveLoginUserName(url, params: params)
             }
             
         } else {
             print("token已过期")
+        }
+    }
+    func saveLoginUserName(url: String, params: [String: AnyObject]) {
+        let manager = AFHTTPSessionManager()
+
+        manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
+            if let user = data as? [String : AnyObject] {
+                //                print(user)
+                let loginUser = User.yy_modelWithDictionary(user as [NSObject : AnyObject])
+                self.idButton.setTitle(loginUser.name, forState: .Normal)
+                let account = AccountTool.localAccount!
+                account.name = loginUser.name
+                AccountTool.saveAccount(account)
+            }
+            }) { (data, error: NSError) -> Void in
+                print("failed \(error) \(data)")
         }
     }
 }
