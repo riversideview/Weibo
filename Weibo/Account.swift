@@ -21,39 +21,49 @@ class Account: NSObject, NSCoding {
     }
 
     var access_token: String = ""
-    var expires_in: Int32 = 0
-    var remind_in: Int32 = 0
-    var uid: Int32 = 0
+    var expires_in: Int = 0
+    var remind_in: Int = 0
+    var uid: Int64 = 0
     var expiresTime: NSDate!
+    var since_id: Int = 0
+    ///登陆后的用户名
+    var name: String!
     
     init(account: [String : AnyObject]) {
         super.init()
+        
+        ///通过字典给自身赋值
         self.setValuesForKeysWithDictionary(account)
-        self.expiresTime = NSDate().dateByAddingTimeInterval(Double(self.expires_in))
-//        self.access_token = account["access_token"] as! String
-//        self.expires_in = account["expires_in"] as! Int
-//        self.remind_in = (account["remind_in"] as! NSString).intValue
-//        self.uid = (account["uid"] as! NSString).intValue
+        expiresTime = NSDate().dateByAddingTimeInterval(Double(expires_in))
+//        access_token = account["access_token"] as! String
+//        expires_in = account["expires_in"] as! Int
+//        remind_in = (account["remind_in"] as! NSString).intValue
+//        uid = (account["uid"] as! NSString).intValue
     }
     
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.access_token, forKey: "access_token")
-        aCoder.encodeInt32(self.expires_in, forKey: "expires_in")
-        aCoder.encodeInt32(self.remind_in, forKey: "remind_in")
-        aCoder.encodeInt32(self.uid, forKey: "uid")
-        aCoder.encodeObject(self.expiresTime, forKey: "expiresTime")
+        aCoder.encodeObject(access_token, forKey: "access_token")
+        aCoder.encodeInteger(expires_in, forKey: "expires_in")
+        aCoder.encodeInteger(remind_in, forKey: "remind_in")
+        aCoder.encodeInt64(uid, forKey: "uid")
+        aCoder.encodeInteger(since_id, forKey: "since_id")
+        aCoder.encodeObject(expiresTime, forKey: "expiresTime")
+        aCoder.encodeObject(name, forKey: "name")
     }
     
     
     
     required init(coder aDecoder: NSCoder) {
         super.init()
-        self.access_token = aDecoder.decodeObjectForKey("access_token") as! String
-        self.expires_in = aDecoder.decodeIntForKey("expires_in")
-        self.remind_in = aDecoder.decodeIntForKey("remind_in")
-        self.uid = aDecoder.decodeIntForKey("uid")
-        self.expiresTime = aDecoder.decodeObjectForKey("expiresTime") as! NSDate
+        
+        access_token = aDecoder.decodeObjectForKey("access_token") as! String
+        expires_in = aDecoder.decodeIntegerForKey("expires_in")
+        remind_in = aDecoder.decodeIntegerForKey("remind_in")
+        uid = aDecoder.decodeInt64ForKey("uid")
+        since_id = aDecoder.decodeIntegerForKey("since_id")
+        expiresTime = aDecoder.decodeObjectForKey("expiresTime") as! NSDate
+        name = aDecoder.decodeObjectForKey("name") as! String
     }
     
     

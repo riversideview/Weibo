@@ -1,13 +1,13 @@
 //
-//  CellFrameController.swift
+//  StatusCellSubviewFrame.swift
 //  Weibo
 //
 //  Created by Riversideview on 15/12/29.
 //  Copyright © 2015年 Riversideview. All rights reserved.
 //
 import UIKit
-
-class CellFrameController: NSObject {
+///view model
+class StatusCellSubviewFrame: NSObject {
     
     ///内容区
     var statusView: CGRect!
@@ -144,18 +144,18 @@ class CellFrameController: NSObject {
             let retweetMainX: CGFloat = cellSpacing
             let retweetMainY: CGFloat = cellSpacing
             
-            let contentWidth = cellWidth - cellSpacing * 2
+
             ///判断转发微博是否被删除
             if retweeted_status.user != nil {
                 let retweetMainText = "@" + retweeted_status.user.name + "：" + retweeted_status.text
                 let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
-                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
+                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: cellWidth - cellSpacing * 2, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
 
                 retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
             } else {
                 let retweetMainText = retweeted_status.text
                 let retweetMainAText = NSAttributedString(string: retweetMainText, attributes: [NSFontAttributeName: RetweetMainFont as AnyObject])
-                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: contentWidth, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
+                let retweetMainSize = retweetMainAText.boundingRectWithSize(CGSize(width: cellWidth - cellSpacing * 2, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).size
                 
                 retweetMainLabel = CGRect(x: retweetMainX, y: retweetMainY, width: retweetMainSize.width, height: retweetMainSize.height)
             }
@@ -232,7 +232,7 @@ class CellFrameController: NSObject {
         let toolH: CGFloat = 35
         
         commentView = CGRect(x: toolX, y: toolY, width: toolW, height: toolH)
-        cellHeight = CGRectGetMaxY(commentView) + 5
+        cellHeight = CGRectGetMaxY(commentView) 
         
     }
     

@@ -15,7 +15,7 @@ class RetweetView: UIImageView {
             
         }
     }
-    var controller: CellFrameController! {
+    var subviewFrame: StatusCellSubviewFrame! {
         didSet {
             setupSubviewsFrames()
         }
@@ -27,7 +27,7 @@ class RetweetView: UIImageView {
 
     convenience init() {
         self.init(frame: CGRectZero)
-        
+        self.userInteractionEnabled = true
     }
     
     override init(frame: CGRect) {
@@ -65,9 +65,9 @@ class RetweetView: UIImageView {
      获得微博数据后执行该方法设置转发内容子控件的frame
      */
     func setupSubviewsFrames() {
-        if let retweet = controller.status.retweeted_status {
+        if let retweet = subviewFrame.status.retweeted_status {
             ///昵称+内容
-            retweetMainLabel.frame = controller.retweetMainLabel
+            retweetMainLabel.frame = subviewFrame.retweetMainLabel
             if retweet.user != nil {
                 let retweetMainText = "@" + retweet.user.name + "：" + retweet.text
                 retweetMainLabel.text = retweetMainText
@@ -78,14 +78,14 @@ class RetweetView: UIImageView {
             if retweet.pic_urls?.count > 0 {
 
                 ///转发配图
-                retweetThumbnailView.frame = controller.retweetThumbnailView
-                retweetThumbnailView.controller = controller
+                retweetThumbnailView.frame = subviewFrame.retweetThumbnailView
+                retweetThumbnailView.subviewFrame = subviewFrame
 //                retweetThumbnailView.sd_setImageWithURL(NSURL(string: photo!.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
             } else {
                 retweetThumbnailView.removeFromSuperview()
             }
             ///转发内容区
-            self.frame = controller.retweetView
+            self.frame = subviewFrame.retweetView
         }
         
     }

@@ -80,6 +80,7 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
         
         manager.POST(url, parameters: params, progress: { (progress: NSProgress) -> Void in
             print(progress)
+            WeiboTool.chooseViewController()
             }, success: { (dataTask: NSURLSessionDataTask, responseObject: AnyObject?) -> Void in
                 
                 if let account = responseObject as? [String : AnyObject] {

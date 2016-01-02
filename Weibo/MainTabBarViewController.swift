@@ -76,14 +76,3 @@ extension MainTabBarViewController: CustomTabBarDelegate {
         self.selectedIndex = toint
     }
 }
-
-extension UIImage {
-    
-    class func resizeImageWithName(image image: String) -> UIImage? {
-        let image = UIImage(named: image)
-        let w = Int((image?.size.width)! / 2)
-        let h = Int((image?.size.height)! / 2)
-        return image?.stretchableImageWithLeftCapWidth(w, topCapHeight: h)
-    }
-    
-}

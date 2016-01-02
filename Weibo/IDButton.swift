@@ -40,7 +40,7 @@ class IDButton: UIButton {
         }
     }
     override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
-        let imageX: CGFloat = contentRect.width - (self.currentImage?.size.width)! - 10
+        let imageX: CGFloat = contentRect.width - (self.currentImage?.size.width)!
         let imageY: CGFloat = 0
         let imageW: CGFloat = (self.currentImage?.size.width)!
         let imageH: CGFloat = contentRect.height
@@ -56,14 +56,24 @@ class IDButton: UIButton {
     override func layoutSubviews() {
         
         super.layoutSubviews()
+        self.backgroundColor = UIColor.purpleColor()
         self.imageView?.contentMode = .Center
-        self.titleLabel?.textAlignment = .Center
-        
+        self.titleLabel?.textAlignment = .Left
+
+        self.titleLabel?.font = UIFont.systemFontOfSize(22)
         if let title = self.titleLabel?.text {
-            let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(22) as AnyObject])
-            let width = titleSize.width + 40
-            let hight = titleSize.height + 18
-            self.frame.size = CGSize(width: width, height: hight)
+            if title.characters.count < 12 {
+                let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(22) as AnyObject])
+                let width = titleSize.width
+                let hight = titleSize.height
+                self.frame.size = CGSize(width: width, height: hight)
+            } else {
+                let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(22) as AnyObject])
+                let width = titleSize.width - 50
+                let hight = titleSize.height
+                self.frame.size = CGSize(width: width, height: hight)
+            }
+            
         }
     }
     

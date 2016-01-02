@@ -23,10 +23,10 @@ class CommentView: UIImageView {
             setupTextForButtons()
         }
     }
-    var controller: CellFrameController! {
+    var subviewFrame: StatusCellSubviewFrame! {
         didSet {
-            status = controller.status
-            self.frame = controller.commentView
+            status = subviewFrame.status
+            self.frame = subviewFrame.commentView
         }
     }
     func setupTextForButtons() {
@@ -49,6 +49,7 @@ class CommentView: UIImageView {
         self.userInteractionEnabled = true
         self.image = UIImage.resizeImageWithName(image: "common_card_bottom_background")
         self.highlightedImage = UIImage.resizeImageWithName(image: "common_card_bottom_background_highlighted")
+        self.backgroundColor = UIColor.blackColor()
 
         repostButton = setupButton("转发", image: "timeline_icon_retweet", backgroundImage: "timeline_card_bottom_background", hightlightBackgroundImage: "timeline_card_bottom_background_highlighted")
 

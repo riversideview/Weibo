@@ -22,7 +22,7 @@ class CustomBadgeButton: UIButton {
         didSet {
             self.setTitle(badge, forState: .Normal)
             if (badge! as NSString).length > 2 {
-                let badgeSize = (badge! as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(9) as AnyObject])
+                let badgeSize = (badge! as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(11) as AnyObject])
                 let badgeW = badgeSize.width + 10
                 let badgeH: CGFloat! = self.currentBackgroundImage?.size.height
                 self.frame.size = CGSize(width: badgeW, height: badgeH)

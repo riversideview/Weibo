@@ -8,26 +8,25 @@
 
 import UIKit
 
-class ThumbnailView: UIImageView {
+class ThumbnailView: UIView {
 
     var photos: [Photo]! {
         didSet {
-            for photo in photos {
+            for i in 0..<photos.count {
+                let photo = photos[i]
                 let imageView = UIImageView()
                 //            http://ww4.sinaimg.cn/thumbnail/82383abfjw1ezjx6mp94wj20qo0zk485.jpg
                 var imageURL = photo.thumbnail_pic.stringByReplacingOccurrencesOfString("thumbnail", withString: "bmiddle")
                 if imageURL.rangeOfString(".gif") != nil {
                     imageURL = imageURL.stringByReplacingOccurrencesOfString("bmiddle", withString: "thumbnail")
-                    
+                    setupGifMark(imageView: imageView)
                 }
+                
+                imageView.tag = i
+                imageView.userInteractionEnabled = true
+                imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "clickImage:"))
 
-                imageView.sd_setImageWithURL(NSURL(string: imageURL), placeholderImage: UIImage(named: "timeline_image_placeholder"), completed: { (_) -> Void in
-                    let gifMark = UIImageView(image: UIImage(named: "timeline_image_gif"))
-                    
-                    gifMark.frame.origin = CGPoint(x: imageView.frame.width - gifMark.frame.width, y: imageView.frame.height - gifMark.frame.height)
-                    imageView.addSubview(gifMark)
-                    print("gif image")
-                })
+                imageView.sd_setImageWithURL(NSURL(string: imageURL), placeholderImage: UIImage(named: "timeline_image_placeholder"))
                 imageView.contentMode = .ScaleAspectFill
                 imageView.clipsToBounds = true
                 self.addSubview(imageView)
@@ -36,13 +35,25 @@ class ThumbnailView: UIImageView {
             setupSubviewsFrames(photos.count)
         }
     }
-    var controller: CellFrameController! {
+    
+    func setupGifMark(imageView imageView: UIImageView) {
+        let gifMark = UIImageView(image: UIImage(named: "timeline_image_gif"))
+        gifMark.autoresizingMask = [.FlexibleLeftMargin, .FlexibleTopMargin]
+        gifMark.frame.origin = CGPoint(x: imageView.frame.width - gifMark.frame.width, y: imageView.frame.height - gifMark.frame.height)
+        imageView.addSubview(gifMark)
+        print("gif")
+    }
+
+    func clickImage(gesture: UIGestureRecognizer) {
+        print(gesture.view!.tag)
+    }
+    var subviewFrame: StatusCellSubviewFrame! {
         didSet {
             
-            if controller.status.pic_urls?.count > 0 {
-                photos = controller.status.pic_urls as! [Photo]
-            } else if controller.status.retweeted_status?.pic_urls?.count > 0 {
-                photos = controller.status.retweeted_status?.pic_urls as! [Photo]
+            if subviewFrame.status.pic_urls?.count > 0 {
+                photos = subviewFrame.status.pic_urls as! [Photo]
+            } else if subviewFrame.status.retweeted_status?.pic_urls?.count > 0 {
+                photos = subviewFrame.status.retweeted_status?.pic_urls as! [Photo]
             }
         }
     }
@@ -50,15 +61,26 @@ class ThumbnailView: UIImageView {
     convenience init() {
         self.init(frame: CGRectZero)
         self.backgroundColor = UIColor.clearColor()
+        self.userInteractionEnabled = true
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         
        
     }
-    
+//    func addWaterMake(view: UIView) {
+//        if view.tag == 2{
+//            let gifMark = UIImageView(image: UIImage(named: "timeline_image_gif"))
+//            
+//            gifMark.frame.origin = CGPoint(x: view.frame.width - gifMark.frame.width, y: view.frame.height - gifMark.frame.height)
+//            view.addSubview(gifMark)
+//            print("gif image")
+//        }
+//
+//    }
+//    
     func setupSubviewsFrames(imageCount: Int) {
-
+        
         if imageCount == 1 { //单张图片
             for i in 0..<imageCount {
                 let view = self.subviews[i]
@@ -67,7 +89,6 @@ class ThumbnailView: UIImageView {
                 let w: CGFloat = self.frame.width / 2.5
                 let h: CGFloat = self.frame.height
                 view.frame = CGRect(x: x, y: y, width: w, height: h)
-                
             }
         } else if imageCount == 2 { //两张图片
             
@@ -81,7 +102,7 @@ class ThumbnailView: UIImageView {
                 let h: CGFloat = self.frame.height
                 
                 view.frame = CGRect(x: x, y: y, width: w, height: h)
-                
+
             }
         } else if imageCount == 4 {
             for i in 0..<imageCount {
@@ -103,7 +124,7 @@ class ThumbnailView: UIImageView {
                 let x: CGFloat = squareWidth * f + imageSpacing * f
                 
                 view.frame = CGRect(x: x, y: y, width: squareWidth, height: squareWidth)
-                
+
             }
         } else if imageCount == 3 {
             for i in 0..<imageCount {
@@ -118,7 +139,6 @@ class ThumbnailView: UIImageView {
                 let x: CGFloat = squareWidth * f + imageSpacing * f
                 
                 view.frame = CGRect(x: x, y: y, width: squareWidth, height: squareWidth)
-                
             }
         } else if imageCount > 4 {
             
@@ -153,7 +173,7 @@ class ThumbnailView: UIImageView {
                 let x: CGFloat = squareWidth * f + imageSpacing * f
                 
                 view.frame = CGRect(x: x, y: y, width: squareWidth, height: squareWidth)
-                
+
             }
             
         }

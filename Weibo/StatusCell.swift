@@ -33,27 +33,18 @@ class StatusCell: UITableViewCell {
 
     
     ///自动计算cell的frame并设置frame
-    var controller: CellFrameController! {
+    var subviewFrame: StatusCellSubviewFrame! {
         didSet {
-            statusView.controller = controller
-            commentView.controller = controller
+            statusView.subviewFrame = subviewFrame
+            commentView.subviewFrame = subviewFrame
         }
     }
     
-    //重写父类添加边距
-    override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set {
-            let frameX: CGFloat = newValue.origin.x
-            let frameY: CGFloat = newValue.origin.y + 5
-            let frameW: CGFloat = newValue.width
-            let frameH: CGFloat = newValue.height - 5
-            let xframe = CGRect(x: frameX, y: frameY, width: frameW, height: frameH)
-            super.frame = xframe
-        }
+    convenience init() {
+        self.init(style: .Default, reuseIdentifier: "StatusCell")
+
     }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -61,7 +52,7 @@ class StatusCell: UITableViewCell {
 
         setupCommentView()
         
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.redColor()
         
     }
     

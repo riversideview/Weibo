@@ -10,7 +10,7 @@ import UIKit
 
 class StatusView: UIImageView {
     
-    var controller: CellFrameController! {
+    var subviewFrame: StatusCellSubviewFrame! {
         didSet {
             setupSubviewsFrames()
         }
@@ -39,7 +39,7 @@ class StatusView: UIImageView {
  
     convenience init() {
         self.init(frame: CGRectZero)
-        
+        self.userInteractionEnabled = true
     }
     
     override init(frame: CGRect) {
@@ -59,6 +59,8 @@ class StatusView: UIImageView {
         
         self.image = UIImage.resizeImageWithName(image: "timeline_card_background")
         self.highlightedImage = UIImage.resizeImageWithName(image: "timeline_card_background_highlighted")
+
+        self.backgroundColor = UIColor.purpleColor()
 
         iconView = UIImageView()
         iconView.clipsToBounds = true
@@ -95,20 +97,20 @@ class StatusView: UIImageView {
      获得微博数据后执行该方法设置原创内容子控件的frame
      */
     func setupSubviewsFrames() {
-        let status = controller.status
-        let user = controller.status.user
+        let status = subviewFrame.status
+        let user = subviewFrame.status.user
         
         ///内容区
-        self.frame = controller.statusView
+        self.frame = subviewFrame.statusView
         
         ///头像
         iconView.sd_setImageWithURL(NSURL(string: status.user.profile_image_url), placeholderImage: UIImage(named: "avatar_default"))
-        iconView.frame = controller.iconView
+        iconView.frame = subviewFrame.iconView
         iconView.layer.cornerRadius = iconView.frame.width/2
         /// 昵称
         idLabel.text = user.name
         idLabel.font = IDFont
-        idLabel.frame = controller.idLabel
+        idLabel.frame = subviewFrame.idLabel
         
         ///发送时间
         timeLabel.text = status.created_atLabelString
@@ -134,18 +136,18 @@ class StatusView: UIImageView {
         
         /// 正文
         mainLabel.text = status.text
-        mainLabel.frame = controller.mainLabel
+        mainLabel.frame = subviewFrame.mainLabel
         
 
         if status.pic_urls?.count > 0 {
 //            let photo = status.pic_urls?.firstObject as! Photo
-            thumbnailView.frame = controller.thumbnailView
-            thumbnailView.controller = controller
+            thumbnailView.frame = subviewFrame.thumbnailView
+            thumbnailView.subviewFrame = subviewFrame
 //            thumbnailView.sd_setImageWithURL(NSURL(string: photo.thumbnail_pic), placeholderImage: UIImage(named: "timeline_image_placeholder"))
         }
         
         ///传入frame
-        retweetView.controller = controller
+        retweetView.subviewFrame = subviewFrame
 
         
     }

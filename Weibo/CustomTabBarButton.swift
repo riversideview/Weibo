@@ -55,6 +55,7 @@ class CustomTabBarButton: UIButton {
         self.setTitle(item.title, forState: .Selected)
         self.setImage(item.image, forState: .Normal)
         self.setImage(item.selectedImage, forState: .Selected)
+        
         if item.badgeValue != nil {
             let badgeButton = CustomBadgeButton()
             badgeButton.badge = item.badgeValue
@@ -62,7 +63,6 @@ class CustomTabBarButton: UIButton {
             let badgeY: CGFloat = 3
             badgeButton.frame.origin = CGPointMake(badgeX, badgeY)
             self.addSubview(badgeButton)
-
         }
         
     }

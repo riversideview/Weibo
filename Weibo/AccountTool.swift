@@ -7,7 +7,7 @@
 //
 
 //账号保存地址
-let accountSavePath: String! = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last?.URLByAppendingPathComponent("account.data").path
+let AccountSavePath: String! = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last?.URLByAppendingPathComponent("account.data").path
 
 import UIKit
 //账号工具管理
@@ -17,24 +17,25 @@ class AccountTool: NSObject {
         let currentAccount = Account(account: account)
         
         //执行归档并打印结果
-        print(NSKeyedArchiver.archiveRootObject(currentAccount, toFile: accountSavePath!))
+        print(NSKeyedArchiver.archiveRootObject(currentAccount, toFile: AccountSavePath!))
     }
     
     //获取本地账户文件的信息
     static var localAccount: Account? {
-        if let account = NSKeyedUnarchiver.unarchiveObjectWithFile(accountSavePath) as? Account {
+        if let account = NSKeyedUnarchiver.unarchiveObjectWithFile(AccountSavePath) as? Account {
+
             let expiresTime = account.expiresTime
             if NSDate().compare(expiresTime) == .OrderedAscending {
-                print("expiresTime > now")
-                print("现在\(NSDate())")
-                print("过期时间 \(expiresTime)")
-                print("")
-                print("")
-                print("")
+//                print("expiresTime > now")
+//                print("现在\(NSDate())")
+//                print("过期时间 \(expiresTime)")
+//                print("")
+//                print("")
+//                print(account.uid)
                 return account
             }
         }
-        print("localAccount is nil")
+//        print("localAccount is nil")
         return nil
     }
     

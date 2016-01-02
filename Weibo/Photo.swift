@@ -11,7 +11,6 @@ import UIKit
 class Photo: NSObject {
     var thumbnail_pic: String! {
         didSet {
-
             thumbnail_pic = thumbnail_pic.stringByReplacingOccurrencesOfString("thumbnail", withString: "bmiddle")
         }
     }
