@@ -52,8 +52,13 @@ class StatusCell: UITableViewCell {
 
         setupCommentView()
         
-        self.backgroundColor = UIColor.redColor()
-        
+        self.backgroundColor = UIColor.clearColor()
+        self.highlighted = false
+
+    
+    }
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(false, animated: false)
     }
     
     /**
@@ -66,10 +71,6 @@ class StatusCell: UITableViewCell {
         contentView.addSubview(statusView)
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(false, animated: false)
-    }
-
     /**
      初始化评论区
      */

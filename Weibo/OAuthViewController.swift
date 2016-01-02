@@ -42,6 +42,7 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
                 let codeRange = Range<String.Index>(start: range.endIndex, end: url.endIndex)
                 let code = url.substringWithRange(codeRange)
                 accessTokenWithCode(code: code)
+                return false
             }
         }
         return true
@@ -85,7 +86,8 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
                 
                 if let account = responseObject as? [String : AnyObject] {
                     //保存从网络获得的账号
-                    AccountTool.saveAccount(account)
+                    let currentAccount = Account(account: account)
+                    AccountTool.saveAccount(currentAccount)
                     //选择正确的视图控制器
                     WeiboTool.chooseViewController()
                 }

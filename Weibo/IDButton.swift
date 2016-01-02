@@ -56,7 +56,7 @@ class IDButton: UIButton {
     override func layoutSubviews() {
         
         super.layoutSubviews()
-        self.backgroundColor = UIColor.purpleColor()
+        self.backgroundColor = UIColor.clearColor()
         self.imageView?.contentMode = .Center
         self.titleLabel?.textAlignment = .Left
 

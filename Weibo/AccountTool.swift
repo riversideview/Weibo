@@ -13,11 +13,9 @@ import UIKit
 //账号工具管理
 class AccountTool: NSObject {
     //保存账户至本地目录
-    class func saveAccount(account: [String: AnyObject]) {
-        let currentAccount = Account(account: account)
-        
+    class func saveAccount(account: Account) {
         //执行归档并打印结果
-        print(NSKeyedArchiver.archiveRootObject(currentAccount, toFile: AccountSavePath!))
+        print(NSKeyedArchiver.archiveRootObject(account, toFile: AccountSavePath!))
     }
     
     //获取本地账户文件的信息

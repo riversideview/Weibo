@@ -27,7 +27,7 @@ class Account: NSObject, NSCoding {
     var expiresTime: NSDate!
     var since_id: Int = 0
     ///登陆后的用户名
-    var name: String!
+    var name: String? = ""
     
     init(account: [String : AnyObject]) {
         super.init()
@@ -63,7 +63,7 @@ class Account: NSObject, NSCoding {
         uid = aDecoder.decodeInt64ForKey("uid")
         since_id = aDecoder.decodeIntegerForKey("since_id")
         expiresTime = aDecoder.decodeObjectForKey("expiresTime") as! NSDate
-        name = aDecoder.decodeObjectForKey("name") as! String
+        name = aDecoder.decodeObjectForKey("name") as? String
     }
     
     

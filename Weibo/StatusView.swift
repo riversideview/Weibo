@@ -60,7 +60,6 @@ class StatusView: UIImageView {
         self.image = UIImage.resizeImageWithName(image: "timeline_card_background")
         self.highlightedImage = UIImage.resizeImageWithName(image: "timeline_card_background_highlighted")
 
-        self.backgroundColor = UIColor.purpleColor()
 
         iconView = UIImageView()
         iconView.clipsToBounds = true

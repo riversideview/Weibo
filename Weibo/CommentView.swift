@@ -47,10 +47,12 @@ class CommentView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.userInteractionEnabled = true
+        self.highlighted = false
+        
         self.image = UIImage.resizeImageWithName(image: "common_card_bottom_background")
-        self.highlightedImage = UIImage.resizeImageWithName(image: "common_card_bottom_background_highlighted")
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.clearColor()
 
+        
         repostButton = setupButton("转发", image: "timeline_icon_retweet", backgroundImage: "timeline_card_bottom_background", hightlightBackgroundImage: "timeline_card_bottom_background_highlighted")
 
         commentsButton = setupButton("评论", image: "timeline_icon_comment", backgroundImage: "timeline_card_bottom_background", hightlightBackgroundImage: "timeline_card_bottom_background_highlighted")
@@ -72,6 +74,7 @@ class CommentView: UIImageView {
     func setupButton(title: String, image: String, backgroundImage: String, hightlightBackgroundImage: String)  -> UIButton{
         
         let button = UIButton()
+        button.highlighted = false
         button.setImage(UIImage(named: image), forState: .Normal)
         button.setBackgroundImage(UIImage(named: backgroundImage), forState: .Normal)
         button.setBackgroundImage(UIImage(named: hightlightBackgroundImage), forState: .Highlighted)
