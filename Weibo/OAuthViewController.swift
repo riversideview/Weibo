@@ -17,9 +17,13 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //添加认证页面
+        setupWebView()
+    }
+    func setupWebView() {
         let webView = UIWebView()
         webView.delegate = self
-        webView.frame = CGRect(x: self.view.frame.origin.x, y: 20, width: self.view.frame.width, height: self.view.frame.height - 20)
+        webView.frame = self.view.bounds
+        webView.frame.origin.y += 20
         webView.scrollView.scrollEnabled = false
         let url = NSURL(string: "https://api.weibo.com/oauth2/authorize?client_id=1547115197&redirect_uri=www.baidu.com")
         let request = NSURLRequest(URL: url!)

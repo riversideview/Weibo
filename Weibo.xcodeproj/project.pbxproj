@@ -29,6 +29,8 @@
 		8C865BB81C356AC900DD9930 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C865BB71C356AC900DD9930 /* StatusView.swift */; };
 		8C865BBA1C356B1600DD9930 /* RetweetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C865BB91C356B1600DD9930 /* RetweetView.swift */; };
 		8C92BF2B1C3274AF000214E2 /* StatusCellSubviewFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C92BF2A1C3274AE000214E2 /* StatusCellSubviewFrame.swift */; };
+		8C944FED1C38D018002DA297 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C944FEC1C38D018002DA297 /* PostViewController.swift */; };
+		8C944FF01C38D194002DA297 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C944FEF1C38D194002DA297 /* PostView.swift */; };
 		8C9876581C3625F300B69EC0 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9876571C3625F300B69EC0 /* ThumbnailView.swift */; };
 		8CB126F21C30D77900902392 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB126F11C30D77900902392 /* Account.swift */; };
 		8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */; };
@@ -88,6 +90,8 @@
 		8C865BB71C356AC900DD9930 /* StatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		8C865BB91C356B1600DD9930 /* RetweetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetweetView.swift; sourceTree = "<group>"; };
 		8C92BF2A1C3274AE000214E2 /* StatusCellSubviewFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCellSubviewFrame.swift; sourceTree = "<group>"; };
+		8C944FEC1C38D018002DA297 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		8C944FEF1C38D194002DA297 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		8C9876571C3625F300B69EC0 /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		8CB126F11C30D77900902392 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -151,7 +155,6 @@
 				8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */,
 				8C5EC5ED1C2CE119008C3774 /* CustomTabBarButton.swift */,
 				8C5EC5F31C2D2C32008C3774 /* CustomBadgeButton.swift */,
-				8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -194,12 +197,12 @@
 				8C5CC0E21C2C194300E38044 /* AppDelegate.swift */,
 				8C169D6E1C311370003F6B3E /* WeiboTool.swift */,
 				8C4EBBE21C2FE5610094B9D4 /* Login OAuth */,
+				8C944FEE1C38D021002DA297 /* Post */,
 				8C43836C1C2D91ED003E9B13 /* Main */,
 				8CF3F0791C2EE4C700D239E5 /* New Feature */,
 				8C5EC5EF1C2CE133008C3774 /* Home */,
 				8C5EC5F11C2CE140008C3774 /* Discover */,
 				8C5EC5F21C2CE14C008C3774 /* Me */,
-				8CF3F0711C2E853500D239E5 /* Extension.swift */,
 				8C5CC1101C2C1B4600E38044 /* Supporting Files */,
 			);
 			path = Weibo;
@@ -226,6 +229,7 @@
 		8C5CC1101C2C1B4600E38044 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8CF3F0711C2E853500D239E5 /* Extension.swift */,
 				8C470D0F1C37DC6A003622BA /* Assets.xcassets */,
 				8C5CC0EB1C2C194300E38044 /* LaunchScreen.storyboard */,
 				8C5CC0EE1C2C194300E38044 /* Info.plist */,
@@ -299,6 +303,16 @@
 				8C5CC1131C2C22E900E38044 /* HomeViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		8C944FEE1C38D021002DA297 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				8C944FEC1C38D018002DA297 /* PostViewController.swift */,
+				8C944FEF1C38D194002DA297 /* PostView.swift */,
+				8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */,
+			);
+			name = Post;
 			sourceTree = "<group>";
 		};
 		8CF3F0791C2EE4C700D239E5 /* New Feature */ = {
@@ -509,7 +523,9 @@
 				8CF3F0761C2E9DD400D239E5 /* ISearchBar.swift in Sources */,
 				8C169D6F1C311370003F6B3E /* WeiboTool.swift in Sources */,
 				8C92BF2B1C3274AF000214E2 /* StatusCellSubviewFrame.swift in Sources */,
+				8C944FED1C38D018002DA297 /* PostViewController.swift in Sources */,
 				8CFFBB141C3189E70022BFDE /* StatusCell.swift in Sources */,
+				8C944FF01C38D194002DA297 /* PostView.swift in Sources */,
 				8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */,
 				8CF3F06E1C2E58E800D239E5 /* INavigationController.swift in Sources */,
 				8C169D6D1C310EE4003F6B3E /* AccountTool.swift in Sources */,

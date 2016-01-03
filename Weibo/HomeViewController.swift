@@ -30,6 +30,7 @@ class HomeViewController: UITableViewController {
         setupStatus()
         setupRefreshControl()
         setupIDButton()
+        
 
         
     }
@@ -52,7 +53,7 @@ class HomeViewController: UITableViewController {
                         self.newStatusView.alpha = 0
                     }, completion: {(_) -> Void in
                         self.newStatusView.removeFromSuperview()
-                        self.newStatusView = nil
+
                 })
         })
         
@@ -60,7 +61,11 @@ class HomeViewController: UITableViewController {
     }
     func idButtonClick() {
         idButton.click()
-        
+        print(self.navigationItem.rightBarButtonItem?.titleTextAttributesForState(.Disabled))
+        print(self.navigationItem.rightBarButtonItem?.titleTextAttributesForState(.Normal))
+        print(self.navigationItem.leftBarButtonItem?.titleTextAttributesForState(.Disabled))
+        print(self.navigationItem.leftBarButtonItem?.titleTextAttributesForState(.Normal))
+
     }
 
     let footer = MJRefreshNormalHeader()

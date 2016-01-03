@@ -101,6 +101,7 @@ class StatusCellSubviewFrame: NSObject {
         let mainX: CGFloat = iconX
         let mainY: CGFloat = CGRectGetMaxY(iconView) + cellSpacing
         let mainText = NSAttributedString(string: status.text, attributes: [NSFontAttributeName: MainFont as AnyObject])
+        
         let mainSize = mainText.boundingRectWithSize(CGSize(width: cellWidth - cellSpacing * 2, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil)
         
         mainLabel = CGRect(x: mainX, y: mainY, width: mainSize.width, height: mainSize.height)
