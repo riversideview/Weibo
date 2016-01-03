@@ -60,7 +60,11 @@ class MainTabBarViewController: UITabBarController {
     }
 
     func addChildViewController(viewController: UIViewController, name: String, image: String, selectImage: String) {
-        viewController.title = name
+        if name == "首页" {
+            viewController.tabBarItem.title = name
+        } else {
+            viewController.title = name
+        }
         viewController.tabBarItem.image = UIImage(named: image)
         viewController.tabBarItem.selectedImage = UIImage(named: selectImage)
         let nav = INavigationController(rootViewController: viewController)

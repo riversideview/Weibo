@@ -200,10 +200,7 @@ class HomeViewController: UITableViewController {
                     self.showNewStatusesCount(statuses.count)
                     self.tableView.mj_header.endRefreshing()
                     self.tableView.reloadData()
-                    
                 }
-          
-                
             }
             }) { (_, error: NSError) -> Void in
                 print("failed \(error)")
@@ -218,9 +215,9 @@ class HomeViewController: UITableViewController {
         /**
         创建ID按钮
         */
-        self.idButton.setTitle(self.title, forState: .Normal)
+
         self.idButton.addTarget(self, action: "idButtonClick", forControlEvents: .TouchUpInside)
-        self.navigationItem.titleView = self.idButton
+        self.navigationController?.navigationBar.addSubview(idButton)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_friendattention", highlight: "navigationbar_friendattention_highlighted", target: self, selector: "friendattention")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_icon_radar", highlight: "navigationbar_icon_radar_highlighted", target: self, selector: "radar")
@@ -243,7 +240,7 @@ class HomeViewController: UITableViewController {
                 "uid": Int(AccountTool.localAccount!.uid)
             ]
             if account.name != "" {
-                self.idButton.setTitle(account.name, forState: .Normal)
+                idButton.setTitle(account.name, forState: .Normal)
                 saveLoginUserName(url, params: params)
             } else {
                 saveLoginUserName(url, params: params)

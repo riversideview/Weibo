@@ -232,7 +232,7 @@ class StatusCellSubviewFrame: NSObject {
         let toolH: CGFloat = 35
         
         commentView = CGRect(x: toolX, y: toolY, width: toolW, height: toolH)
-        cellHeight = CGRectGetMaxY(commentView) - 1
+        cellHeight = CGRectGetMaxY(commentView) + cellSpacing
         
     }
     

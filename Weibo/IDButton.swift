@@ -72,6 +72,9 @@ class IDButton: UIButton {
                 let width = titleSize.width - 50
                 let hight = titleSize.height
                 self.frame.size = CGSize(width: width, height: hight)
+                let x:CGFloat = (UIScreen.mainScreen().bounds.width - self.frame.width) / 2
+                let y:CGFloat = (44 - self.frame.height) / 2
+                self.frame.origin = CGPoint(x: x, y: y)
             }
             
         }

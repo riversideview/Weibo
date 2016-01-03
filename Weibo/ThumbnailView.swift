@@ -142,6 +142,7 @@ class ThumbnailView: UIView {
             }
         } else if imageCount > 4 {
             
+            
             for i in 0..<imageCount {
                 let view = self.subviews[i]
                 var f: CGFloat = CGFloat(i)

@@ -52,7 +52,7 @@ class StatusCell: UITableViewCell {
 
         setupCommentView()
         
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         self.highlighted = false
 
     
