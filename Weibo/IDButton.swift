@@ -5,7 +5,7 @@
 //  Created by Riversideview on 15/12/26.
 //  Copyright © 2015年 Riversideview. All rights reserved.
 //
-
+let IDButtonFont = UIFont.systemFontOfSize(22)
 import UIKit
 
 class IDButton: UIButton {
@@ -21,8 +21,8 @@ class IDButton: UIButton {
         super.init(frame: frame)
         self.setImage(UIImage(named: "navigationbar_arrow_down"), forState: .Normal)
         self.adjustsImageWhenHighlighted = false
-        self.titleLabel?.font = UIFont.systemFontOfSize(22)
-        self.setTitleColor(UIColor.purpleColor(), forState: .Normal)
+        self.titleLabel?.font = IDButtonFont
+        self.setTitleColor(UIColor.orangeColor(), forState: .Normal)
         self.setBackgroundImage(UIImage.resizeImageWithName(image: "navigationbar_filter_background_highlighted"), forState: .Highlighted)
     }
 
@@ -60,17 +60,18 @@ class IDButton: UIButton {
         self.imageView?.contentMode = .Center
         self.titleLabel?.textAlignment = .Left
 
-        self.titleLabel?.font = UIFont.systemFontOfSize(22)
+        self.titleLabel?.font = IDButtonFont
         if let title = self.titleLabel?.text {
             if title.characters.count < 12 {
-                let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(22) as AnyObject])
-                let width = titleSize.width
-                let hight = titleSize.height
+                let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: IDButtonFont as AnyObject])
+                let width = size.width
+                let hight = size.height
                 self.frame.size = CGSize(width: width, height: hight)
             } else {
-                let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(22) as AnyObject])
-                let width = titleSize.width - 50
-                let hight = titleSize.height
+                let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: IDButtonFont as AnyObject])
+                
+                let width = size.width - 50
+                let hight = size.height
                 self.frame.size = CGSize(width: width, height: hight)
                 let x:CGFloat = (UIScreen.mainScreen().bounds.width - self.frame.width) / 2
                 let y:CGFloat = (44 - self.frame.height) / 2

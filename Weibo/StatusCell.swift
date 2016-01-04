@@ -44,6 +44,8 @@ class StatusCell: UITableViewCell {
         self.init(style: .Default, reuseIdentifier: "StatusCell")
 
     }
+ 
+    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

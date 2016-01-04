@@ -16,11 +16,9 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         setupTabBar()
         setupAllChildViewController()
-
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         for view in self.tabBar.subviews {
             if view.isKindOfClass(UIControl) {
                 view.removeFromSuperview()
@@ -55,8 +53,6 @@ class MainTabBarViewController: UITabBarController {
         self.addChildViewController(me)
         addChildViewController(me, name: "我", image: "tabbar_profile", selectImage: "tabbar_profile_selected")
         me.tabBarItem.badgeValue = "66+"
-        
-
     }
 
     func addChildViewController(viewController: UIViewController, name: String, image: String, selectImage: String) {
@@ -79,4 +75,11 @@ extension MainTabBarViewController: CustomTabBarDelegate {
     func didSelectButtonFrom(toint: Int) {
         self.selectedIndex = toint
     }
+    func didPlusButton() {
+        let post = PostViewController()
+        let nav = INavigationController(rootViewController: post)
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    
 }

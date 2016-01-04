@@ -9,6 +9,7 @@
 
 @objc protocol CustomTabBarDelegate {
     optional func didSelectButtonFrom(toint: Int)
+    optional func didPlusButton()
 }
 import UIKit
 
@@ -21,26 +22,34 @@ class CustomTabBar: UIView {
         // Drawing code
     }
     */
-    let plusButton = UIButton()
+    lazy var plusButton = {
+        return UIButton()
+    }()
     var delegate:CustomTabBarDelegate!
 
     override init(frame: CGRect) {
 
         super.init(frame: frame)
-        plusButton.setBackgroundImage(UIImage(named: "tabbar_compose_button"), forState: .Normal)
-        plusButton.setBackgroundImage(UIImage(named: "tabbar_compose_button_highlighted"), forState: .Highlighted)
-        plusButton.setImage(UIImage(named: "tabbar_compose_icon_add"), forState: .Normal)
-        plusButton.setImage(UIImage(named: "tabbar_compose_icon_add_highlighted"), forState: .Highlighted)
-
-        plusButton.sizeToFit()
-        self.addSubview(plusButton)
+        setupPlusButton()
         
+    }
+    func plusAction() {
+        delegate.didPlusButton!()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupPlusButton() {
+        plusButton.setBackgroundImage(UIImage(named: "tabbar_compose_button"), forState: .Normal)
+        plusButton.setBackgroundImage(UIImage(named: "tabbar_compose_button_highlighted"), forState: .Highlighted)
+        plusButton.setImage(UIImage(named: "tabbar_compose_icon_add"), forState: .Normal)
+        plusButton.setImage(UIImage(named: "tabbar_compose_icon_add_highlighted"), forState: .Highlighted)
+        plusButton.addTarget(self, action: "plusAction", forControlEvents: .TouchUpInside)
+        plusButton.sizeToFit()
+        self.addSubview(plusButton)
+    }
 
 
     func addTabBarButtonWithItem(tabBarItem: UITabBarItem) {
@@ -64,6 +73,10 @@ class CustomTabBar: UIView {
         button.selected = true
         ssdgadgButton = button
     }
+    
+    
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         var index: CGFloat = 0
