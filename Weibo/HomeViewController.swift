@@ -20,8 +20,6 @@ class HomeViewController: UITableViewController {
     /// 顶部IDbutton
     let idButton = IDButton()
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()

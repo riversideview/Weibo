@@ -68,17 +68,7 @@ class ThumbnailView: UIView {
         
        
     }
-//    func addWaterMake(view: UIView) {
-//        if view.tag == 2{
-//            let gifMark = UIImageView(image: UIImage(named: "timeline_image_gif"))
-//            
-//            gifMark.frame.origin = CGPoint(x: view.frame.width - gifMark.frame.width, y: view.frame.height - gifMark.frame.height)
-//            view.addSubview(gifMark)
-//            print("gif image")
-//        }
-//
-//    }
-//    
+    
     func setupSubviewsFrames(imageCount: Int) {
         
         if imageCount == 1 { //单张图片
@@ -141,12 +131,9 @@ class ThumbnailView: UIView {
                 view.frame = CGRect(x: x, y: y, width: squareWidth, height: squareWidth)
             }
         } else if imageCount > 4 {
-            
-            
             for i in 0..<imageCount {
                 let view = self.subviews[i]
                 var f: CGFloat = CGFloat(i)
-                
                 let squareWidth = (self.frame.width - imageSpacing * 2) / 3
                 
                 var line: CGFloat = 0
@@ -159,7 +146,6 @@ class ThumbnailView: UIView {
                         f = 2
                     }
                     line = 2
-                    
                 } else if f >= 3 { //第二行
                     if f == 3 {
                         f = 0
@@ -172,11 +158,8 @@ class ThumbnailView: UIView {
                 }
                 let y = squareWidth * line + imageSpacing * line
                 let x: CGFloat = squareWidth * f + imageSpacing * f
-                
                 view.frame = CGRect(x: x, y: y, width: squareWidth, height: squareWidth)
-
             }
-            
         }
         
     }
