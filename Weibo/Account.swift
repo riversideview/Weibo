@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//本地缓存类
 class Account: NSObject, NSCoding {
     /* 示例返回数据
     {

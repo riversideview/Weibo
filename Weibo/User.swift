@@ -17,5 +17,4 @@ class User: NSObject {
     var profile_image_url: String!
     /// 用户会员
     var mbrank: String!
-    
 }

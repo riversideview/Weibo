@@ -27,8 +27,6 @@ class AccountTool: NSObject {
 //                print("expiresTime > now")
 //                print("现在\(NSDate())")
 //                print("过期时间 \(expiresTime)")
-
-
 //                print(account.uid)
                 return account
             }
@@ -37,21 +35,7 @@ class AccountTool: NSObject {
         return nil
     }
     
-    class func SaveLoginUserNameAndShowIDWithButton(url: String, params: [String: AnyObject], button: IDButton) {
-        
-        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
-            if let user = data as? [String : AnyObject] {
-                //                print(user)
-                let loginUser = User.yy_modelWithDictionary(user as [NSObject : AnyObject])
-                button.setTitle(loginUser.name, forState: .Normal)
-                let account = AccountTool.localAccount!
-                account.name = loginUser.name
-                AccountTool.SaveAccount(account)
-            }
-            }) { (error: NSError) -> Void in
-                print(error)
-        }
-    }
+    
     
     
     

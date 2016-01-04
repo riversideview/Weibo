@@ -52,42 +52,33 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
         return true
     }
     
-    /*
-    lient_id	true	string	申请应用时分配的AppKey。
-    client_secret	true	string	申请应用时分配的AppSecret。
-    grant_type	true	string	请求的类型，填写authorization_code
-    
-    grant_type为authorization_code时
-    必选	类型及范围	说明
-    code	true	string	调用authorize获得的code值。
-    redirect_uri	true	string	回调地址，需需
-    */
+ 
     
     /**
     通过CODE获得TOKEN
     */
     func accessTokenWithCode(code code: String) {
+        //        let params: [String: AnyObject] = [
+//            "client_id": "1547115197",
+//            "client_secret": "267e5adad587fa29d03a33bf42c54d3b",
+//            "grant_type": "authorization_code",
+//            "code": code,
+//            "redirect_uri": "http://www.baidu.com",
+//        ]
         
-        let url = "https://api.weibo.com/oauth2/access_token"
-        let params: [String: AnyObject] = [
-            "client_id": "1547115197",
-            "client_secret": "267e5adad587fa29d03a33bf42c54d3b",
-            "grant_type": "authorization_code",
-            "code": code,
-            "redirect_uri": "http://www.baidu.com",
-        ]
+        let params = OAuthRequestParams()
+        params.client_id = "1547115197"
+        params.client_secret = "267e5adad587fa29d03a33bf42c54d3b"
+        params.grant_type = "authorization_code"
+        params.code = code
+        params.redirect_uri = "http://www.baidu.com"
         /// 由于返回的结构, 必须设置ContentTypes为text/plain！
         let type: Set<String> = ["text/plain"]
         
-        HttpRequestTool.PostRequest(url: url, params: params, type: type, success: { (data: AnyObject?) -> Void in
-            if let account = data as? [String : AnyObject] {
-                print(account)
-                //保存从网络获得的账号
-                let currentAccount = Account(account: account)
-                AccountTool.SaveAccount(currentAccount)
-                //选择正确的视图控制器
-                ShowViewTool.chooseViewController()
-            }
+        OAuthTool.GetUserDataWith(params, type: type,
+            success: { (account: [String : AnyObject]?) -> Void in
+                print(account)            //选择正确的视图控制器
+            ShowViewTool.chooseViewController()
             }) { (error: NSError) -> Void in
                 print(error)
         }

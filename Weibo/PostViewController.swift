@@ -120,33 +120,22 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
     ///发送微博不带图片
     func sendStatusWithoutPhoto() {
 
-        var params: [String: AnyObject]!
-        let url = "https://api.weibo.com/2/statuses/update.json"
-        if let token = AccountTool.localAccount?.access_token {
-            params = [
-                "status": textView.text,
-                "access_token": token
-            ]
-        }
-        HttpRequestTool.PostRequest(url: url, params: params, type: nil, success: { (_) -> Void in
+        let params = PostRequestParams()
+        params.status = textView.text
+        
+        PostTool.PostTextWith(params, success: { (_) -> Void in
             print("已发送")
-
             }) { (error: NSError) -> Void in
                 print(error)
-
         }
         
     }
+    ///发送微博带图片
     func sendStatusWithPhotos() {
 
-        var params: [String: AnyObject]!
-        let url = "https://upload.api.weibo.com/2/statuses/upload.json"
-        if let token = AccountTool.localAccount?.access_token {
-            params = [
-                "status": textView.text,
-                "access_token": token,
-            ]
-        }
+        let params = PostRequestParams()
+        params.status = textView.text
+        
         var uploadData = UploadData<String, NSData>()
         if let photo = uploadPhotosView.photos.last {
             uploadData.name = "pic"
@@ -154,9 +143,8 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
             uploadData.fileName = "x.jpg"
             uploadData.mimeType = "image/jpeg"
         }
-        
-        HttpRequestTool.PostRequest(url: url, params: params, uploadData: uploadData, success: { (data: AnyObject?) -> Void in
-                print("发送成功")
+        PostTool.PostTextAndPhotoWith(params, uploadData: uploadData, success: { (_) -> Void in
+            print("发送成功")
             }) { (error: NSError) -> Void in
                 print(error)
         }
@@ -167,8 +155,6 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
     }
     
 
-    
-    
     ///图片选择器代理方法
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 //        print("imagePickerController")

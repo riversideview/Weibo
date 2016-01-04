@@ -96,7 +96,7 @@ class Status: NSObject, YYModel {
     var retweeted_status: Status?
     
     
-    
+    ///实现数组模型提供对应类转换
     static func modelContainerPropertyGenericClass() -> [NSObject : AnyObject]! {
         return ["pic_urls": Photo.self]
     }

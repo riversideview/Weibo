@@ -13,7 +13,7 @@ import MJRefresh
 
 class HomeViewController: UITableViewController {
     
-    /// 微博Hight数组包含了微博信息
+    /// ViewModel包含了微博信息
     var subviewFrames = [StatusCellSubviewFrame]()
 
     /// 顶部IDbutton
@@ -56,7 +56,7 @@ class HomeViewController: UITableViewController {
 
     }
 
-    let footer = MJRefreshNormalHeader()
+
     func setupRefreshControl() {
         let header = MJRefreshNormalHeader {
             self.setupStatus()
@@ -73,7 +73,6 @@ class HomeViewController: UITableViewController {
         footer.setTitle("加载更多微博", forState: .Idle)
         footer.setTitle("加载中...", forState: .Refreshing)
         self.tableView.mj_footer = footer
-        
         self.tableView.mj_header.beginRefreshing()
 
     }
@@ -95,7 +94,6 @@ class HomeViewController: UITableViewController {
      */
     func getPastStatus() {
         let params = StatusRequestParams()
-        
         if subviewFrames.count > 0 {//有微博的时候的刷新
             if let max_id = self.subviewFrames.last?.status.idstr {
                 if let token = AccountTool.localAccount?.access_token {
@@ -110,27 +108,23 @@ class HomeViewController: UITableViewController {
             params.access_token = token
             params.count = "5"
         }
-        StatusTool.ShowHomeStatusWith(params,
-            success: { (data: AnyObject?) -> Void in
-            if let timeline = data as? [String : AnyObject] {
-                //                print(timeline)
-                if let statuses = timeline["statuses"] as? [NSDictionary] {
-                    var pastStatuses = [StatusCellSubviewFrame]()
-                    for status in statuses {
-                        let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
-                        let controller = StatusCellSubviewFrame()
-                        controller.status = currentStatus
-                        pastStatuses.append(controller)
-                    }
-                    self.subviewFrames.appendContentsOf(pastStatuses)
-                    self.tableView.mj_footer.endRefreshing()
-                    print("完成刷新")
-                    self.tableView.reloadData()
+        StatusTool.ShowHomeStatusWith(params, success: {
+            (timeline: TimeLine) -> Void in
+            var pastStatuses = [StatusCellSubviewFrame]()
+            if let statuses = timeline.statuses as? [Status] {
+                for status in statuses {
+                    let controller = StatusCellSubviewFrame()
+                    controller.status = status
+                    pastStatuses.append(controller)
                 }
             }
+            self.subviewFrames.appendContentsOf(pastStatuses)
+            self.tableView.mj_footer.endRefreshing()
+            print("完成刷新")
+            self.tableView.reloadData()
             }) { (error: NSError) -> Void in
                 print(error)
-                self.tableView.mj_footer.endRefreshing()
+                self.tableView.mj_header.endRefreshing()
         }
     }
     
@@ -153,24 +147,20 @@ class HomeViewController: UITableViewController {
             params.count = "5"
         }
         
-        StatusTool.ShowHomeStatusWith(params,
-            success: { (data: AnyObject?) -> Void in
-            if let timeline = data as? [String : AnyObject] {
-                //                print(timeline)
-                if let statuses = timeline["statuses"] as? [NSDictionary] {
-                    var newStatuses = [StatusCellSubviewFrame]()
-                    for status in statuses {
-                        let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
-                        let controller = StatusCellSubviewFrame()
-                        controller.status = currentStatus
-                        newStatuses.append(controller)
-                    }
-                    self.subviewFrames.insertContentsOf(newStatuses, at: 0)
-                    self.showNewStatusesCount(statuses.count)
-                    self.tableView.mj_header.endRefreshing()
-                    self.tableView.reloadData()
+        StatusTool.ShowHomeStatusWith(params, success: {
+            (timeline: TimeLine) -> Void in
+            var newStatuses = [StatusCellSubviewFrame]()
+            if let statuses = timeline.statuses as? [Status] {
+                for status in statuses {
+                    let controller = StatusCellSubviewFrame()
+                    controller.status = status
+                    newStatuses.append(controller)
                 }
             }
+            self.subviewFrames.insertContentsOf(newStatuses, at: 0)
+            self.showNewStatusesCount(newStatuses.count)
+            self.tableView.mj_header.endRefreshing()
+            self.tableView.reloadData()
             }) { (error: NSError) -> Void in
                 print(error)
                 self.tableView.mj_header.endRefreshing()
@@ -196,23 +186,31 @@ class HomeViewController: UITableViewController {
     
     ///初始化顶部IDButton内容
     func setupIDButton() {
-        var params = [String: AnyObject]()
-
-        let url = "https://api.weibo.com/2/users/show.json"
+        let params = LoginUserRequestParams()
+        ///判断本地账户是否过期
         if let account = AccountTool.localAccount {
-            params = [
-                "access_token": account.access_token,
-                "uid": String(account.uid)
-            ]
+            params.uid = String(account.uid)
             if account.name != "" {
                 idButton.setTitle(account.name, forState: .Normal)
-                AccountTool.SaveLoginUserNameAndShowIDWithButton(url, params: params, button: idButton)
+                LoginUserTool.SaveLoginUserWith(params, success: {
+                    (loginUser: LoginUser) -> Void in
+                        self.idButton.setTitle(loginUser.name, forState: .Normal)
+                    print("success")
+                    }, failure: { (error: NSError) -> Void in
+                        print(error)
+                })
             } else {
-                AccountTool.SaveLoginUserNameAndShowIDWithButton(url, params: params, button: idButton)
+                LoginUserTool.SaveLoginUserWith(params, success: {
+                    (loginUser: LoginUser) -> Void in
+                    print("success")
+                    self.idButton.setTitle(loginUser.name, forState: .Normal)
+                    }, failure: { (error: NSError) -> Void in
+                        print(error)
+                })
             }
-            
         } else {
             print("token已过期")
+            ShowViewTool.TokenExpired()
         }
     }
     ///初始newStatus属性
@@ -223,9 +221,6 @@ class HomeViewController: UITableViewController {
         newStatusView.backgroundColor = UIColor.orangeColor()
         newStatusView.frame = CGRect(x: 0, y: 33, width: UIScreen.mainScreen().bounds.width, height: 33)
     }
-
-    
-    
 }
 
 extension HomeViewController {
@@ -236,9 +231,6 @@ extension HomeViewController {
         cell.subviewFrame = subviewFrames[indexPath.row]
         
         return cell
-    }
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return subviewFrames[indexPath.row].cellHeight
