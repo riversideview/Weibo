@@ -21,11 +21,11 @@ class Account: NSObject, NSCoding {
     }
 
     var access_token: String = ""
-    var expires_in: Int = 0
-    var remind_in: Int = 0
+    var expires_in: Int32 = 0
+    var remind_in: Int32 = 0
     var uid: Int64 = 0
     var expiresTime: NSDate!
-    var since_id: Int = 0
+    var since_id: Int32 = 0
     ///登陆后的用户名
     var name: String? = ""
     
@@ -35,6 +35,7 @@ class Account: NSObject, NSCoding {
         ///通过字典给自身赋值
         self.setValuesForKeysWithDictionary(account)
         expiresTime = NSDate().dateByAddingTimeInterval(Double(expires_in))
+        name = ""
 //        access_token = account["access_token"] as! String
 //        expires_in = account["expires_in"] as! Int
 //        remind_in = (account["remind_in"] as! NSString).intValue
@@ -44,10 +45,10 @@ class Account: NSObject, NSCoding {
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(access_token, forKey: "access_token")
-        aCoder.encodeInteger(expires_in, forKey: "expires_in")
-        aCoder.encodeInteger(remind_in, forKey: "remind_in")
+        aCoder.encodeInt32(expires_in, forKey: "expires_in")
+        aCoder.encodeInt32(remind_in, forKey: "remind_in")
         aCoder.encodeInt64(uid, forKey: "uid")
-        aCoder.encodeInteger(since_id, forKey: "since_id")
+        aCoder.encodeInt32(since_id, forKey: "since_id")
         aCoder.encodeObject(expiresTime, forKey: "expiresTime")
         aCoder.encodeObject(name, forKey: "name")
     }
@@ -58,10 +59,10 @@ class Account: NSObject, NSCoding {
         super.init()
         
         access_token = aDecoder.decodeObjectForKey("access_token") as! String
-        expires_in = aDecoder.decodeIntegerForKey("expires_in")
-        remind_in = aDecoder.decodeIntegerForKey("remind_in")
+        expires_in = aDecoder.decodeInt32ForKey("expires_in")
+        remind_in = aDecoder.decodeInt32ForKey("remind_in")
         uid = aDecoder.decodeInt64ForKey("uid")
-        since_id = aDecoder.decodeIntegerForKey("since_id")
+        since_id = aDecoder.decodeInt32ForKey("since_id")
         expiresTime = aDecoder.decodeObjectForKey("expiresTime") as! NSDate
         name = aDecoder.decodeObjectForKey("name") as? String
     }

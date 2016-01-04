@@ -17,9 +17,13 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //添加认证页面
+        setupWebView()
+    }
+    func setupWebView() {
         let webView = UIWebView()
         webView.delegate = self
-        webView.frame = CGRect(x: self.view.frame.origin.x, y: 20, width: self.view.frame.width, height: self.view.frame.height - 20)
+        webView.frame = self.view.bounds
+        webView.frame.origin.y += 20
         webView.scrollView.scrollEnabled = false
         let url = NSURL(string: "https://api.weibo.com/oauth2/authorize?client_id=1547115197&redirect_uri=www.baidu.com")
         let request = NSURLRequest(URL: url!)
@@ -79,12 +83,10 @@ class OAuthViewController: UIViewController, UIWebViewDelegate {
         let type: Set<String> = ["text/plain"]
         manager.responseSerializer.acceptableContentTypes = type
         
-        manager.POST(url, parameters: params, progress: { (progress: NSProgress) -> Void in
-            print(progress)
-            WeiboTool.chooseViewController()
-            }, success: { (dataTask: NSURLSessionDataTask, responseObject: AnyObject?) -> Void in
+        manager.POST(url, parameters: params, progress: nil, success: { (dataTask: NSURLSessionDataTask, data: AnyObject?) -> Void in
                 
-                if let account = responseObject as? [String : AnyObject] {
+                if let account = data as? [String : AnyObject] {
+                    print(account)
                     //保存从网络获得的账号
                     let currentAccount = Account(account: account)
                     AccountTool.saveAccount(currentAccount)

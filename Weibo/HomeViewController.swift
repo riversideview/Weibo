@@ -12,7 +12,6 @@ import YYModel
 import SDWebImage
 import MJRefresh
 
-
 class HomeViewController: UITableViewController {
 
     /// 微博Hight数组包含了微博信息
@@ -25,34 +24,26 @@ class HomeViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setupNavBar()
-        setupStatus()
         setupRefreshControl()
         setupIDButton()
-
-        
     }
     var newStatusView: UIButton!
     
     ///显示新微博数量
     func showNewStatusesCount(count: Int) {
-        newStatusView = UIButton()
-        newStatusView.titleLabel?.font = UIFont.systemFontOfSize(12)
-        newStatusView.backgroundColor = UIColor.orangeColor()
-        newStatusView.frame = CGRect(x: 0, y: 33, width: UIScreen.mainScreen().bounds.width, height: 33)
+        resetnewStatusView()
         self.navigationController?.view.insertSubview(newStatusView, belowSubview: self.navigationController!.navigationBar)
         
         count > 0 ? newStatusView.setTitle("\(count)条新微博", forState: .Normal) : newStatusView.setTitle("暂无新微博", forState: .Normal)
-            
+
         UIView.animateWithDuration(0.7, animations: {
                 self.newStatusView.transform = CGAffineTransformMakeTranslation(0, 30)
             }, completion: { finished in
                 UIView.animateWithDuration(0.7, delay: 1.5, options: .OverrideInheritedCurve, animations: { () -> Void in
-                        self.newStatusView.alpha = 0
+                    self.newStatusView.alpha = 0
                     }, completion: {(_) -> Void in
-                        self.newStatusView.removeFromSuperview()
-                        self.newStatusView = nil
+                    self.newStatusView.removeFromSuperview()
                 })
         })
         
@@ -60,32 +51,33 @@ class HomeViewController: UITableViewController {
     }
     func idButtonClick() {
         idButton.click()
-        
+        print(self.navigationItem.rightBarButtonItem?.titleTextAttributesForState(.Disabled))
+        print(self.navigationItem.rightBarButtonItem?.titleTextAttributesForState(.Normal))
+        print(self.navigationItem.leftBarButtonItem?.titleTextAttributesForState(.Disabled))
+        print(self.navigationItem.leftBarButtonItem?.titleTextAttributesForState(.Normal))
+
     }
 
     let footer = MJRefreshNormalHeader()
     func setupRefreshControl() {
-        
         let header = MJRefreshNormalHeader { () -> Void in
             self.setupStatus()
-
         }
         header.lastUpdatedTimeLabel?.hidden = true
         header.setTitle("下拉更新", forState: .Idle)
         header.setTitle("释放更新", forState: .Pulling)
         header.setTitle("加载中...", forState: .Refreshing)
-
         self.tableView.mj_header = header
-        
-        
         
         let footer = MJRefreshAutoNormalFooter {
             self.getPastStatus()
         }
         footer.setTitle("加载更多微博", forState: .Idle)
         footer.setTitle("加载中...", forState: .Refreshing)
-
         self.tableView.mj_footer = footer
+        
+        self.tableView.mj_header.beginRefreshing()
+
     }
     deinit {
         self.removeObserver(self, forKeyPath: "title")
@@ -194,8 +186,6 @@ class HomeViewController: UITableViewController {
                         newStatuses.append(controller)
                         
                     }
-                    
-                    
                     self.subviewFrames.insertContentsOf(newStatuses, at: 0)
                     self.showNewStatusesCount(statuses.count)
                     self.tableView.mj_header.endRefreshing()
@@ -232,12 +222,12 @@ class HomeViewController: UITableViewController {
     ///初始化顶部IDButton内容
     func setupIDButton() {
         var params = [String: AnyObject]()
-        
+
         let url = "https://api.weibo.com/2/users/show.json"
         if let account = AccountTool.localAccount {
             params = [
                 "access_token": account.access_token,
-                "uid": Int(AccountTool.localAccount!.uid)
+                "uid": String(account.uid)
             ]
             if account.name != "" {
                 idButton.setTitle(account.name, forState: .Normal)
@@ -250,6 +240,16 @@ class HomeViewController: UITableViewController {
             print("token已过期")
         }
     }
+    ///初始newStatus属性
+    func resetnewStatusView() {
+        newStatusView = UIButton()
+        newStatusView.alpha = 0.9
+        newStatusView.titleLabel?.font = UIFont.systemFontOfSize(12)
+        newStatusView.backgroundColor = UIColor.orangeColor()
+        newStatusView.frame = CGRect(x: 0, y: 33, width: UIScreen.mainScreen().bounds.width, height: 33)
+    }
+
+    
     func saveLoginUserName(url: String, params: [String: AnyObject]) {
         let manager = AFHTTPSessionManager()
 
