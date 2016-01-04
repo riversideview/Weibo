@@ -13,7 +13,7 @@ import UIKit
 //账号工具管理
 class AccountTool: NSObject {
     //保存账户至本地目录
-    class func saveAccount(account: Account) {
+    class func SaveAccount(account: Account) {
         //执行归档并打印结果
         print(NSKeyedArchiver.archiveRootObject(account, toFile: AccountSavePath!))
     }
@@ -36,6 +36,23 @@ class AccountTool: NSObject {
 //        print("localAccount is nil")
         return nil
     }
+    
+    class func SaveLoginUserNameAndShowIDWithButton(url: String, params: [String: AnyObject], button: IDButton) {
+        
+        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
+            if let user = data as? [String : AnyObject] {
+                //                print(user)
+                let loginUser = User.yy_modelWithDictionary(user as [NSObject : AnyObject])
+                button.setTitle(loginUser.name, forState: .Normal)
+                let account = AccountTool.localAccount!
+                account.name = loginUser.name
+                AccountTool.SaveAccount(account)
+            }
+            }) { (error: NSError) -> Void in
+                print(error)
+        }
+    }
+    
     
     
 }

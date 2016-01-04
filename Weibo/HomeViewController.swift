@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import AFNetworking
 import YYModel
 import SDWebImage
 import MJRefresh
 
 class HomeViewController: UITableViewController {
-
+    
     /// 微博Hight数组包含了微博信息
     var subviewFrames = [StatusCellSubviewFrame]()
 
@@ -25,6 +24,7 @@ class HomeViewController: UITableViewController {
         setupNavBar()
         setupRefreshControl()
         setupIDButton()
+
     }
     var newStatusView: UIButton!
     
@@ -58,7 +58,7 @@ class HomeViewController: UITableViewController {
 
     let footer = MJRefreshNormalHeader()
     func setupRefreshControl() {
-        let header = MJRefreshNormalHeader { () -> Void in
+        let header = MJRefreshNormalHeader {
             self.setupStatus()
         }
         header.lastUpdatedTimeLabel?.hidden = true
@@ -90,21 +90,21 @@ class HomeViewController: UITableViewController {
     func radar() {
         print("radar")
     }
-    
+    /**
+     上拉获取之前微博
+     */
     func getPastStatus() {
-        let manager = AFHTTPSessionManager()
+
         var params = [String: AnyObject] ()
         let url = "https://api.weibo.com/2/statuses/home_timeline.json"
-        
         if subviewFrames.count > 0 {
             if let max_id = self.subviewFrames.last?.status.idstr {
-                
                 if let token = AccountTool.localAccount?.access_token {
+                    print(AccountTool.localAccount?.uid)
                     params = [
                         "access_token": token,
                         "max_id": Int(max_id)! - 1,
                         "count": 5 //微博获取数量
-
                     ]
                 }
             }
@@ -118,40 +118,34 @@ class HomeViewController: UITableViewController {
         /**
         *  获取微博信息
         */
-        manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
+        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 //                print(timeline)
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
                     var pastStatuses = [StatusCellSubviewFrame]()
-                    
                     for status in statuses {
                         let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
                         let controller = StatusCellSubviewFrame()
                         controller.status = currentStatus
                         pastStatuses.append(controller)
-                        
                     }
                     self.subviewFrames.appendContentsOf(pastStatuses)
                     self.tableView.mj_footer.endRefreshing()
                     print("完成刷新")
                     self.tableView.reloadData()
                 }
-                
-                
             }
-            }) { (_, error: NSError) -> Void in
+            }) { (error: NSError) -> Void in
                 print("failed \(error)")
-                
         }
-
     }
     
-    //获取最新微博
+    /**
+     下拉获得最新微博
+     */
     func setupStatus() {
-        let manager = AFHTTPSessionManager()
-        var params = [String: AnyObject] ()
+        var params = [String: AnyObject]()
         let url = "https://api.weibo.com/2/statuses/home_timeline.json"
-        
         if subviewFrames.count > 0 {
             if let since_id = self.subviewFrames.first?.status.idstr {
                 if let token = AccountTool.localAccount?.access_token {
@@ -161,28 +155,22 @@ class HomeViewController: UITableViewController {
                     ]
                 }
             }
- 
         } else if let token = AccountTool.localAccount?.access_token {
             params = [
                 "access_token": token,
                 "count": 5 //微博获取数量
             ]
         }
-        /**
-        *  获取微博信息
-        */
-        manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
+        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
-//                print(timeline)
+                //                print(timeline)
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
                     var newStatuses = [StatusCellSubviewFrame]()
-                    
                     for status in statuses {
                         let currentStatus = Status.yy_modelWithDictionary(status as [NSObject : AnyObject])
                         let controller = StatusCellSubviewFrame()
                         controller.status = currentStatus
                         newStatuses.append(controller)
-                        
                     }
                     self.subviewFrames.insertContentsOf(newStatuses, at: 0)
                     self.showNewStatusesCount(statuses.count)
@@ -190,28 +178,23 @@ class HomeViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
-            }) { (_, error: NSError) -> Void in
-                print("failed \(error)")
+            }) { (error: NSError) -> Void in
+                print(error)
                 self.tableView.mj_header.endRefreshing()
-
         }
     }
     /**
      配置NavBar
      */
     func setupNavBar() {
-        /**
-        创建ID按钮
-        */
-
+        
+        //创建ID按钮
         self.idButton.addTarget(self, action: "idButtonClick", forControlEvents: .TouchUpInside)
         self.navigationController?.navigationBar.addSubview(idButton)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_friendattention", highlight: "navigationbar_friendattention_highlighted", target: self, selector: "friendattention")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.addIconWithItem(image: "navigationbar_icon_radar", highlight: "navigationbar_icon_radar_highlighted", target: self, selector: "radar")
         self.navigationController?.navigationBar.barStyle = .Default
-
-        
         
         //去除分割
         self.tableView.separatorStyle = .None
@@ -229,9 +212,9 @@ class HomeViewController: UITableViewController {
             ]
             if account.name != "" {
                 idButton.setTitle(account.name, forState: .Normal)
-                saveLoginUserName(url, params: params)
+                AccountTool.SaveLoginUserNameAndShowIDWithButton(url, params: params, button: idButton)
             } else {
-                saveLoginUserName(url, params: params)
+                AccountTool.SaveLoginUserNameAndShowIDWithButton(url, params: params, button: idButton)
             }
             
         } else {
@@ -248,22 +231,7 @@ class HomeViewController: UITableViewController {
     }
 
     
-    func saveLoginUserName(url: String, params: [String: AnyObject]) {
-        let manager = AFHTTPSessionManager()
-
-        manager.GET(url, parameters: params, progress: nil, success: { (_, data: AnyObject?) -> Void in
-            if let user = data as? [String : AnyObject] {
-                //                print(user)
-                let loginUser = User.yy_modelWithDictionary(user as [NSObject : AnyObject])
-                self.idButton.setTitle(loginUser.name, forState: .Normal)
-                let account = AccountTool.localAccount!
-                account.name = loginUser.name
-                AccountTool.saveAccount(account)
-            }
-            }) { (data, error: NSError) -> Void in
-                print("failed \(error) \(data)")
-        }
-    }
+    
 }
 
 extension HomeViewController {

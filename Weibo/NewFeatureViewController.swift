@@ -64,7 +64,7 @@ class NewFeatureViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func enter() {
-        print("enterButton")
+
         let main = MainTabBarViewController()
         self.view.window?.rootViewController = main
     }

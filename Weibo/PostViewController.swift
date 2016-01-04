@@ -6,8 +6,6 @@
 //  Copyright © 2016年 Riversideview. All rights reserved.
 //
 import UIKit
-import AFNetworking
-
 
 class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -121,7 +119,7 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
     }
     ///发送微博不带图片
     func sendStatusWithoutPhoto() {
-        let manager = AFHTTPSessionManager()
+
         var params: [String: AnyObject]!
         let url = "https://api.weibo.com/2/statuses/update.json"
         if let token = AccountTool.localAccount?.access_token {
@@ -130,15 +128,17 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
                 "access_token": token
             ]
         }
-        manager.POST(url, parameters: params, progress: nil, success: { (dataTask: NSURLSessionDataTask, responseObject: AnyObject?) -> Void in
+        HttpRequestTool.PostRequest(url: url, params: params, type: nil, success: { (_) -> Void in
             print("已发送")
-            })
-            { (_, error: NSError) -> Void in
+
+            }) { (error: NSError) -> Void in
                 print(error)
+
         }
+        
     }
     func sendStatusWithPhotos() {
-        let manager = AFHTTPSessionManager()
+
         var params: [String: AnyObject]!
         let url = "https://upload.api.weibo.com/2/statuses/upload.json"
         if let token = AccountTool.localAccount?.access_token {
@@ -147,14 +147,17 @@ class PostViewController: UIViewController, UITextViewDelegate, UIImagePickerCon
                 "access_token": token,
             ]
         }
-        manager.POST(url, parameters: params, constructingBodyWithBlock: { (data: AFMultipartFormData) -> Void in
-            for photo in self.uploadPhotosView.photos {
-                let uploadPhotoData = UIImageJPEGRepresentation(photo, 0.8)!
-                data.appendPartWithFileData(uploadPhotoData, name: "pic", fileName: "x.jpg", mimeType: "image/jpeg")
-            }
-            }, progress: nil, success: { (_, _) -> Void in
-            print("发送成功")
-            }) { (_, error: NSError) -> Void in
+        var uploadData = UploadData<String, NSData>()
+        if let photo = uploadPhotosView.photos.last {
+            uploadData.name = "pic"
+            uploadData.data = UIImageJPEGRepresentation(photo, 0.8)
+            uploadData.fileName = "x.jpg"
+            uploadData.mimeType = "image/jpeg"
+        }
+        
+        HttpRequestTool.PostRequest(url: url, params: params, uploadData: uploadData, success: { (data: AnyObject?) -> Void in
+                print("发送成功")
+            }) { (error: NSError) -> Void in
                 print(error)
         }
     }

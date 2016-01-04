@@ -27,8 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             /**
             *  不为空的时候选择对应视图控制器
             */
-            WeiboTool.chooseViewController()
+            ShowViewTool.chooseViewController()
         }else {
+            ///本地没有缓存账号时
             print("Account Not Exist")
             self.window?.rootViewController = OAuthViewController()
         }
