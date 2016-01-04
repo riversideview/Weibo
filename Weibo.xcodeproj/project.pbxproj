@@ -36,6 +36,8 @@
 		8CCF4E871C393F89002FA62F /* PostToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCF4E861C393F89002FA62F /* PostToolView.swift */; };
 		8CDE15371C3A4DFC00DDFAEA /* UploadPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE15361C3A4DFC00DDFAEA /* UploadPhotosView.swift */; };
 		8CDE153C1C3A7B3600DDFAEA /* HttpRequestTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE153B1C3A7B3600DDFAEA /* HttpRequestTool.swift */; };
+		8CDE153E1C3AA79300DDFAEA /* StatusRequestParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE153D1C3AA79300DDFAEA /* StatusRequestParams.swift */; };
+		8CDE15401C3AA7C000DDFAEA /* StatusTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDE153F1C3AA7C000DDFAEA /* StatusTool.swift */; };
 		8CE44F2F1C2C4A0D00142D29 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */; };
 		8CF3F06E1C2E58E800D239E5 /* INavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */; };
 		8CF3F0721C2E853500D239E5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3F0711C2E853500D239E5 /* Extension.swift */; };
@@ -100,6 +102,8 @@
 		8CCF4E861C393F89002FA62F /* PostToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostToolView.swift; sourceTree = "<group>"; };
 		8CDE15361C3A4DFC00DDFAEA /* UploadPhotosView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPhotosView.swift; sourceTree = "<group>"; };
 		8CDE153B1C3A7B3600DDFAEA /* HttpRequestTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequestTool.swift; sourceTree = "<group>"; };
+		8CDE153D1C3AA79300DDFAEA /* StatusRequestParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusRequestParams.swift; sourceTree = "<group>"; };
+		8CDE153F1C3AA7C000DDFAEA /* StatusTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusTool.swift; sourceTree = "<group>"; };
 		8CE44F2E1C2C4A0D00142D29 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		8CF3F06D1C2E58E800D239E5 /* INavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INavigationController.swift; sourceTree = "<group>"; };
 		8CF3F0711C2E853500D239E5 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 				8C169D6E1C311370003F6B3E /* ShowViewTool.swift */,
 				8C169D6C1C310EE4003F6B3E /* AccountTool.swift */,
 				8CDE153B1C3A7B3600DDFAEA /* HttpRequestTool.swift */,
+				8CDE153F1C3AA7C000DDFAEA /* StatusTool.swift */,
+				8CDE153D1C3AA79300DDFAEA /* StatusRequestParams.swift */,
 				8C4EBBE21C2FE5610094B9D4 /* Login OAuth */,
 				8C944FEE1C38D021002DA297 /* Post */,
 				8C43836C1C2D91ED003E9B13 /* Main */,
@@ -557,6 +563,7 @@
 				8CF3F0721C2E853500D239E5 /* Extension.swift in Sources */,
 				8C4EBBE41C2FE5990094B9D4 /* OAuthViewController.swift in Sources */,
 				8C865BBA1C356B1600DD9930 /* RetweetView.swift in Sources */,
+				8CDE15401C3AA7C000DDFAEA /* StatusTool.swift in Sources */,
 				8C5EC5EE1C2CE119008C3774 /* CustomTabBarButton.swift in Sources */,
 				8CF3F0781C2EC53300D239E5 /* IDButton.swift in Sources */,
 				8C85F4241C3169FD0083308B /* User.swift in Sources */,
@@ -574,6 +581,7 @@
 				8CDE15371C3A4DFC00DDFAEA /* UploadPhotosView.swift in Sources */,
 				8CB126F21C30D77900902392 /* Account.swift in Sources */,
 				8CFB09F31C358CAB00292B3C /* Photo.swift in Sources */,
+				8CDE153E1C3AA79300DDFAEA /* StatusRequestParams.swift in Sources */,
 				8C5CC1181C2C233400E38044 /* DiscoverViewController.swift in Sources */,
 				8C5CC0E31C2C194300E38044 /* AppDelegate.swift in Sources */,
 				8CCF4E871C393F89002FA62F /* PostToolView.swift in Sources */,

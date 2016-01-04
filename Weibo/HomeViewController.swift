@@ -94,31 +94,24 @@ class HomeViewController: UITableViewController {
      上拉获取之前微博
      */
     func getPastStatus() {
-
-        var params = [String: AnyObject] ()
-        let url = "https://api.weibo.com/2/statuses/home_timeline.json"
-        if subviewFrames.count > 0 {
+        let params = StatusRequestParams()
+        
+        if subviewFrames.count > 0 {//有微博的时候的刷新
             if let max_id = self.subviewFrames.last?.status.idstr {
                 if let token = AccountTool.localAccount?.access_token {
-                    print(AccountTool.localAccount?.uid)
-                    params = [
-                        "access_token": token,
-                        "max_id": Int(max_id)! - 1,
-                        "count": 5 //微博获取数量
-                    ]
+                    params.access_token = token
+                    params.max_id = String(Int64(max_id)! - 1)
+                    params.count = "5"
                 }
             }
             
         } else if let token = AccountTool.localAccount?.access_token {
-            params = [
-                "access_token": token,
-                "count": 5 //微博获取数量
-            ]
+            //无微博时的刷新
+            params.access_token = token
+            params.count = "5"
         }
-        /**
-        *  获取微博信息
-        */
-        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
+        StatusTool.ShowHomeStatusWith(params,
+            success: { (data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 //                print(timeline)
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
@@ -136,7 +129,8 @@ class HomeViewController: UITableViewController {
                 }
             }
             }) { (error: NSError) -> Void in
-                print("failed \(error)")
+                print(error)
+                self.tableView.mj_footer.endRefreshing()
         }
     }
     
@@ -144,24 +138,23 @@ class HomeViewController: UITableViewController {
      下拉获得最新微博
      */
     func setupStatus() {
-        var params = [String: AnyObject]()
-        let url = "https://api.weibo.com/2/statuses/home_timeline.json"
-        if subviewFrames.count > 0 {
+
+        let params = StatusRequestParams()
+        if subviewFrames.count > 0 { //已经有微博获取更多微博
             if let since_id = self.subviewFrames.first?.status.idstr {
                 if let token = AccountTool.localAccount?.access_token {
-                    params = [
-                        "access_token": token,
-                        "since_id": since_id
-                    ]
+                    params.access_token = token
+                    params.since_id = since_id
                 }
             }
         } else if let token = AccountTool.localAccount?.access_token {
-            params = [
-                "access_token": token,
-                "count": 5 //微博获取数量
-            ]
+            //初次进入获取微博
+            params.access_token = token
+            params.count = "5"
         }
-        HttpRequestTool.GetRequest(url: url, params: params, success: { (data: AnyObject?) -> Void in
+        
+        StatusTool.ShowHomeStatusWith(params,
+            success: { (data: AnyObject?) -> Void in
             if let timeline = data as? [String : AnyObject] {
                 //                print(timeline)
                 if let statuses = timeline["statuses"] as? [NSDictionary] {
@@ -182,6 +175,7 @@ class HomeViewController: UITableViewController {
                 print(error)
                 self.tableView.mj_header.endRefreshing()
         }
+        
     }
     /**
      配置NavBar
